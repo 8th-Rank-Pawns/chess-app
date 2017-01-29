@@ -1,2 +1,12 @@
+<% if current_user %>
+  <%= link_to "Sign out", destroy_user_session_path, method: :delete %></br>
+  <h4>
+  Why, Hello there 
+  <%= image_tag current_user.image %>
+  <%= current_user.name %>.
+  </h4>
+<% else %>
+  <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %></p>
+<% end %>
 <h1>Welcome 8th Rank Pawns!</h1>
 <h2>Firehose, we have liftoff!</h2>
