@@ -1,0 +1,25 @@
+# This is the configuration used to check the rubocop source code.
+
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+    - 'spec/fixtures/**/*'
+    - 'tmp/**/*'
+  TargetRubyVersion: 2.1
+
+Style/Encoding:
+  EnforcedStyle: when_needed
+  Enabled: false
+  #Previous: Enabled: true. 
+  #Do we care? Only needed for supporting ruby 1.9. in 2.0+, utf is the default.
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never
+
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'spec/**/*.rb'
