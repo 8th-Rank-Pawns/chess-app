@@ -50,22 +50,6 @@ Style/ClassAndModuleChildren:
 
 Style/Documentation:
   Enabled: false
-  Exclude:
-    - 'spec/**/*'
-    - 'test/**/*'
-    - 'app/controllers/application_controller.rb'
-    - 'app/controllers/chess_controller.rb'
-    - 'app/controllers/users/omniauth_callbacks_controller.rb'
-    - 'app/helpers/application_helper.rb'
-    - 'app/helpers/chess_helper.rb'
-    - 'app/helpers/omniauth_callbacks_helper.rb'
-    - 'app/models/piece.rb'
-    - 'app/models/user.rb'
-    - 'db/migrate/20170127030419_devise_create_users.rb'
-    - 'db/migrate/20170127212138_create_pieces.rb'
-    - 'db/migrate/20170127212534_create_games.rb'
-    - 'db/migrate/20170128025601_add_omniauth_to_users.rb'
-    - 'db/migrate/20170128084839_add_name_image_to_users.rb'
 
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
