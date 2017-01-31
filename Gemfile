@@ -50,3 +50,5 @@ end
 
 gem 'figaro'
 gem 'omniauth-facebook'
+
+gem 'simple_form'
