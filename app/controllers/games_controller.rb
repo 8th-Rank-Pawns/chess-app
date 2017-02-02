@@ -1,5 +1,4 @@
 class GamesController < ApplicationController
-
   def new
     @game = Game.new
   end
@@ -11,15 +10,12 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find_by_id(params[:id])
-    if @game.blank?
-      render text: 'Not Found', status: :not_found
-    end
+    render text: 'Not Found', status: :not_found if @game.blank?
   end
-  
+
   private
 
   def game_params
     params.require(:game).permit(:name)
   end
-
 end
