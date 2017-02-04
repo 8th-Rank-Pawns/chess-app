@@ -7,6 +7,8 @@ AllCops:
     - 'vendor/**/*'
     - 'spec/fixtures/**/*'
     - 'tmp/**/*'
+    - 'db/schema.rb'
+    - 'config/initializers/simple_form.rb'
   TargetRubyVersion: 2.1
 
 Style/Encoding:
