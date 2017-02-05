@@ -1,0 +1,11 @@
+<div class="board">
+  <% board = Array.new(8) %>
+  <% board.map! {Array(1..8)}%>
+  <% board.each do |row| %>
+    <div class="row">
+      <% row.each do || %>
+        <div></div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
