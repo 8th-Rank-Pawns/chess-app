@@ -1,2 +1,50 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+.board {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.row {
+  flex-grow: 1;
+  display: flex;
+  width: 50%;
+}
+
+.row > div {
+  width: 100%;
+  border-top: 1px solid gray;
+  border-left: 1px solid gray;
+}
+
+.row > div:last-of-type {
+  border-right: 1px solid gray;
+}
+
+.row > div:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+.row > div:nth-child(odd) {
+  background: white;
+}
+
+.row:nth-child(odd) > div:nth-child(odd), .row:nth-child(even) > div:nth-child(even) {
+  background: white;
+}
+
+.row:nth-child(even) > div:nth-child(odd), .row:nth-child(odd) > div:nth-child(even) {
+  background: black;
+}
+
+.row:first-of-type > div {
+  border-top: 1px solid gray;
+}
+
+.row:last-of-type > div {
+  border-bottom: 1px solid gray;
+}
