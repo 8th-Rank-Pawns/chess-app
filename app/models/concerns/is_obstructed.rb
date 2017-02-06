@@ -1,7 +1,9 @@
 #This file goes in the app>models>concerns folder
-#In queen.rb, rook.rb, bishop.rb, pawn.rb need to add --> include Obstructed
+#In queen.rb, rook.rb, bishop.rb, pawn.rb, I added "include Obstructed"
+#Every time one of these pieces is moved the "valid_move?" method should be called
+#and that should call the "is_obstructed?" method.
 #game.pieces.where(x_value & y_value) are extracted current location of pieces on game board.
-#if is_obstructed returns false, move is valid.
+#if is_obstructed returns false, move is legal.
 module Obstructed
   def horizontal_check
     if x_end < x_start
