@@ -16,8 +16,8 @@ RSpec.describe ChessController, type: :controller do
     end
 
     it 'should not list games with 2 players as available' do
-    	FactoryGirl.create(:fullgame)
-    	get :index
+      FactoryGirl.create(:fullgame)
+      get :index
       expect(response).to have_http_status(:success)
       games = Game.available
       expect(games.count).to eq(0)
