@@ -16,4 +16,5 @@ FactoryGirl.define do
     white_player { FactoryGirl.create(:user).id }
     black_player { FactoryGirl.create(:user).id }
   end
+
 end
