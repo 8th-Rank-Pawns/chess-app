@@ -20,12 +20,6 @@ Style/Encoding:
 Style/FrozenStringLiteralComment:
   EnforcedStyle: never
 
-Metrics/BlockLength:
-  Exclude:
-    - 'Rakefile'
-    - '**/*.rake'
-    - 'spec/**/*'
-
 #Note: Beginning of old .rubocop_todo.yml below this line.
 
 Metrics/AbcSize:
@@ -34,6 +28,10 @@ Metrics/AbcSize:
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/BlockLength:
   Max: 37
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'spec/**/*'
 
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
 # URISchemes: http, https
