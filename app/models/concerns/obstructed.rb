@@ -56,7 +56,7 @@ module Obstructed
     false
   end
 
-  def is_obstructed?(x_start, y_start, x_end, y_end)
+  def obstructed?(x_start, y_start, x_end, y_end)
     if x_end == x_start
       vertical_check
     elsif y_end == y_start
