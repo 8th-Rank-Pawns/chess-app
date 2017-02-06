@@ -72,3 +72,18 @@ body {
 .row:last-of-type > div {
   border-bottom: 1px solid gray;
 }
+
+li#prof_pic {
+  padding-top: 8px;
+}
+
+li#user_name {
+  color: white;
+  padding-top: 15px;
+  margin-left: 5px;
+}
+
+li#special > a{
+  color: white;
+  font-weight: bold;
+}
