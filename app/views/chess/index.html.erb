@@ -10,22 +10,11 @@
     <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %></p>
   <% end %>
 
-<% if current_user %>
-  <%= link_to "Sign out", destroy_user_session_path, method: :delete %></br>
-  <h4>
-  Why, Hello there 
-  <%= image_tag current_user.image %>
-  <%= current_user.name %>.
-  </h4>
-<% else %>
-  <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %></p>
-<% end %>
-
 <h2>Available Games</h2>
 <h3>
-	<% @available_games.each do |game| %>
-		<li>
-			<%= link_to "#{game.name} - join game", game_path(game) %>
-		</li>
-	<% end %>
+  <% @available_games.each do |game| %>
+    <li>
+      <%= link_to "#{game.name} - join game", game_path(game) %>
+    </li>
+  <% end %>
 </h3>
