@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170205165857) do
+ActiveRecord::Schema.define(version: 20170206212106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(version: 20170205165857) do
   end
 
   create_table "pieces", force: true do |t|
-    t.integer  "piece_type"
     t.integer  "vertical_position"
     t.integer  "horizontal_position"
     t.integer  "user_id"
@@ -33,6 +32,7 @@ ActiveRecord::Schema.define(version: 20170205165857) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "type"
+    t.string   "color"
   end
 
   create_table "users", force: true do |t|
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20170205165857) do
     t.string   "uid"
     t.string   "name"
     t.string   "image"
+    t.string   "color"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

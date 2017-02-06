@@ -9,13 +9,28 @@ RSpec.describe GamesController, type: :controller do
   end
 
   describe 'games#create action' do
-    it 'should successfully create a game in our database' do
+    it 'should successfully create a game in our database & redirect to new game' do
       post :create, game: { name: 'Player 1' }
-      expect(response).to redirect_to root_path
-
       game = Game.last
+      expect(response).to redirect_to game_path(game.id)
       expect(game.name).to eq('Player 1')
     end
+
+    it 'should populate board with pieces in correct starting positions after game creation' do
+      post :create, game: { name: 'Player 1' }
+      game = Game.last
+      piece_king = game.pieces.where(horizontal_position: 5, vertical_position: 1).first.type
+      piece_bishop = game.pieces.where(horizontal_position: 6, vertical_position: 1, color: 'white').first.type
+      piece_pawn = game.pieces.where(horizontal_position: 3, vertical_position: 2).first.type
+      piece_pawn_black = game.pieces.where(horizontal_position: 8, vertical_position: 7, color: 'black').first.type
+      piece_queen_black = game.pieces.where(horizontal_position: 4, vertical_position: 8).first.type
+      expect(piece_king).to eq('King')
+      expect(piece_bishop).to eq('Bishop')
+      expect(piece_pawn).to eq('Pawn')
+      expect(piece_pawn_black).to eq('Pawn')
+      expect(piece_queen_black).to eq('Queen')
+    end
+
   end
 
   describe 'games#show action' do
