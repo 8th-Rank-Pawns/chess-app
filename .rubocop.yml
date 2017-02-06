@@ -25,11 +25,12 @@ Metrics/BlockLength:
     - 'Rakefile'
     - '**/*.rake'
     - 'spec/**/*.rb'
+    - '**/*_spec.rb'
 
 #Note: Beginning of old .rubocop_todo.yml below this line.
 
 Metrics/AbcSize:
-  Max: 22
+  Max: 60
 
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/BlockLength:
@@ -42,7 +43,7 @@ Metrics/LineLength:
 
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
-  Max: 15
+  Max: 30
 
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: nested, compact

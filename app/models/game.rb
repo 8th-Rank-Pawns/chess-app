@@ -14,8 +14,8 @@ class Game < ActiveRecord::Base
     Rook.create(horizontal_position: 8, vertical_position: 1, color: 'white', game_id: id)
     count = 1
     while count <= 8
-      Pawn.create(horizontal_position: count, vertical_position: 2, color: 'white', game_id: id)  
-      count +=1
+      Pawn.create(horizontal_position: count, vertical_position: 2, color: 'white', game_id: id)
+      count += 1
     end
       
     King.create(horizontal_position: 5, vertical_position: 8, color: 'black', game_id: id)
@@ -28,8 +28,8 @@ class Game < ActiveRecord::Base
     Rook.create(horizontal_position: 8, vertical_position: 8, color: 'black', game_id: id)
     count = 1
     while count <= 8
-      Pawn.create(horizontal_position: count, vertical_position: 7, color: 'black', game_id: id)  
-      count +=1
+      Pawn.create(horizontal_position: count, vertical_position: 7, color: 'black', game_id: id)
+      count += 1
     end
   end
 end
