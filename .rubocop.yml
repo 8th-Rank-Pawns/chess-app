@@ -25,7 +25,7 @@ Metrics/BlockLength:
     - 'Rakefile'
     - '**/*.rake'
     - 'spec/**/*.rb'
-    - 'spec/**/*_spec.rb'
+    - 'path/to/excluded/games_controller_spec.rb'
 
 #Note: Beginning of old .rubocop_todo.yml below this line.
 
