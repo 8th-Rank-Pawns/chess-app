@@ -30,7 +30,6 @@ RSpec.describe GamesController, type: :controller do
       expect(piece_pawn_black).to eq('Pawn')
       expect(piece_queen_black).to eq('Queen')
     end
-
   end
 
   describe 'games#show action' do
