@@ -1,4 +1,3 @@
-# This file goes in the app>models>concerns folder
 # In queen.rb, rook.rb, bishop.rb, pawn.rb, I added "include Obstructed"
 # Every time one of these pieces is moved the "valid_move?" method should be called
 # and that should call the "is_obstructed?" method.
