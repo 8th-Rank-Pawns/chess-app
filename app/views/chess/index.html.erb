@@ -9,6 +9,12 @@
   <% else %>
     <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %></p>
   <% end %>
-  <h1>Welcome 8th Rank Pawns!</h1>
-  <h2>Firehose, we have liftoff!</h2>
-</div>
+
+<h2>Available Games</h2>
+<h3>
+  <% @available_games.each do |game| %>
+    <li>
+      <%= link_to "#{game.name} - join game", game_path(game) %>
+    </li>
+  <% end %>
+</h3>
