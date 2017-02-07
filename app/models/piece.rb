@@ -33,16 +33,16 @@ class Piece < ActiveRecord::Base
   end
 
   def diagonal_check(x_end, y_end)
-    x_left = (x_start < x_end) ? x_start : x_end
-    x_right = (x_start < x_end) ? x_end : x_start
+    x_left = x_start < x_end ? x_start : x_end
+    x_right = x_start < x_end ? x_end : x_start
     count = 1
     while count < x_right - x_left
       if y_end > y_start
         return true if game.pieces.where(horizontal_position: x_left + count, vertical_position: y_start + count).present?
       else
         return true if game.pieces.where(horizontal_position: x_left + count, vertical_position: y_start - count).present?
-      count += 1
       end
+      count += 1
     end
   end
 
