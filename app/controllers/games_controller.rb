@@ -14,6 +14,10 @@ class GamesController < ApplicationController
     render text: 'Not Found', status: :not_found if @game.blank?
   end
 
+  def update
+    
+  end
+
   private
 
   def game_params
