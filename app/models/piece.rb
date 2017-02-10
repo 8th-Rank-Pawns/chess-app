@@ -17,7 +17,7 @@ class Piece < ActiveRecord::Base
     false
   end
 
-  def vertical_check(@x_end, @y_end)
+  def vertical_check
     if @y_end < @y_start
       (@y_end + 1..@y_start - 1).each do |y_between|
         return true if game.pieces.where(vertical_position: y_between).present?
