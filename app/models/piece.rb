@@ -1,6 +1,7 @@
 class Piece < ActiveRecord::Base
   belongs_to :user
   belongs_to :game
+<<<<<<< HEAD
 # Every time one of these pieces is moved the "valid_move?" method should be called and that should call the "is_obstructed?" method.
 # game.pieces.where(horizontal_position & vertical_position) are extracted current location of pieces on game board.
 # If is_obstructed returns false, move is legal.
@@ -59,4 +60,6 @@ class Piece < ActiveRecord::Base
       false
     end
   end
+=======
+>>>>>>> 3838e6da83d2d6277c08ad873c6e8fb342f3869d
 end
