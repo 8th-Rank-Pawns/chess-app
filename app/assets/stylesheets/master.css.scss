@@ -62,7 +62,7 @@ body {
 }
 
 .row:nth-child(even) > div:nth-child(odd), .row:nth-child(odd) > div:nth-child(even) {
-  background: black;
+  background: brown;
 }
 
 .row:first-of-type > div {
@@ -71,4 +71,10 @@ body {
 
 .row:last-of-type > div {
   border-bottom: 1px solid gray;
+}
+
+.piece-image {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
