@@ -59,8 +59,8 @@ class Piece < ActiveRecord::Base
 
   private
 
-    def find_x_right_and_x_left
-      @x_left = @x_start < @x_end ? @x_start : @x_end
-      @x_right = @x_start < @x_end ? @x_end : @x_start
-    end
+  def find_x_right_and_x_left
+    @x_left = @x_start < @x_end ? @x_start : @x_end
+    @x_right = @x_start < @x_end ? @x_end : @x_start
+  end
 end
