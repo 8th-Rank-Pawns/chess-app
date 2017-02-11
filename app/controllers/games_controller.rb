@@ -16,7 +16,9 @@ class GamesController < ApplicationController
 
   def update
     @game = Game.find(params[:id])
-    @game.update_attributes(player_params)
+    if @game.black_player != current_user
+      @game.black_player == current_user
+    end
   end
 
   private
@@ -25,7 +27,4 @@ class GamesController < ApplicationController
     params.require(:game).permit(:name)
   end
 
-  def player_params
-    params.require(:game).permit(:black_player)
-  end
 end
