@@ -15,12 +15,17 @@ class GamesController < ApplicationController
   end
 
   def update
-    current_user.game.update()
+    @game = Game.find(params[:id])
+    @game.update_attributes(player_params)
   end
 
   private
 
   def game_params
     params.require(:game).permit(:name)
+  end
+
+  def player_params
+    params.require(:game).permit(:black_player)
   end
 end
