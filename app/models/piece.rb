@@ -63,4 +63,4 @@ class Piece < ActiveRecord::Base
       @x_left = @x_start < @x_end ? @x_start : @x_end
       @x_right = @x_start < @x_end ? @x_end : @x_start
     end
-  end
+end
