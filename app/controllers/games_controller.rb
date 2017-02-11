@@ -15,7 +15,7 @@ class GamesController < ApplicationController
   end
 
   def update
-    
+    current_user.game.update()
   end
 
   private
