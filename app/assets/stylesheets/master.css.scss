@@ -84,4 +84,18 @@ body {
   content: "";
   display: block;
   padding-bottom: 10%;
+
+li#prof_pic {
+  padding-top: 8px;
+}
+
+li#user_name {
+  color: white;
+  padding-top: 15px;
+  margin-left: 5px;
+}
+
+li#special > a{
+  color: white;
+  font-weight: bold;
 }
