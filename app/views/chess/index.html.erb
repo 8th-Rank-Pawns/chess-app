@@ -14,7 +14,7 @@
 <h3>
   <% @available_games.each do |game| %>
     <li>
-      <%= link_to "#{game.name} - Join Game", :action => :put, game_path(game) %>
+      <%= link_to "#{game.name} - Join Game", :action => :put %>
     </li>
   <% end %>
 </h3>
