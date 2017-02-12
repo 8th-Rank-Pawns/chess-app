@@ -51,7 +51,7 @@ RSpec.describe GamesController, type: :controller do
       user = FactoryGirl.create(:user)
       put :update, fullgame: { black_player: user.id}
       game.reload
-      expect(black_player).to eq user.id
+      expect(black_player.id).to eq user.id
     end
 
     it 'should have http 404 error if the game could not be found' do
