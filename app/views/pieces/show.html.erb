@@ -1,0 +1,14 @@
+<div class="board">
+  <% board = Array.new(8) %>
+  <% board.map! {Array(1..8)}%>
+  <% board.each_with_index do |row, index| %>
+    <div class="row">
+      <% row.each do |x| %>
+        <div class=<%= change_padding(x, index + 1) %>>
+        <%= render_piece(x, index + 1) %>
+          
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
