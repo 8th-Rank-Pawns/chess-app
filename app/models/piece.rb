@@ -58,10 +58,10 @@ class Piece < ActiveRecord::Base
   end
 
   def diagonal?(x_end, y_end)
-      diff_x = (x_end - horizontal_position).abs
-      diff_y = (y_end - vertical_position).abs
-      return true if diff_y == diff_x
-      false
+    diff_x = (x_end - horizontal_position).abs
+    diff_y = (y_end - vertical_position).abs
+    return true if diff_y == diff_x
+    false
   end
 
   def horizontal_or_vertical?(x_end, y_end)
