@@ -57,13 +57,6 @@ class Piece < ActiveRecord::Base
     end
   end
 
-  private
-
-  def find_x_right_and_x_left
-    @x_left = @x_start < @x_end ? @x_start : @x_end
-    @x_right = @x_start < @x_end ? @x_end : @x_start
-  end
-
   def is_diagonal?(x_end, y_end)
       diff_x = (x_end - horizontal horizontal_position).abs
       diff_y = (y_end - vertical_position).abs
@@ -80,5 +73,12 @@ class Piece < ActiveRecord::Base
 
   def did_not_move?(x_end, y_end)
     return true if x_end == horizontal_position && y_end == vertical_position
+  end
+
+  private
+
+  def find_x_right_and_x_left
+    @x_left = @x_start < @x_end ? @x_start : @x_end
+    @x_right = @x_start < @x_end ? @x_end : @x_start
   end
 end
