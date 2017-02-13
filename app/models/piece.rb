@@ -63,4 +63,22 @@ class Piece < ActiveRecord::Base
     @x_left = @x_start < @x_end ? @x_start : @x_end
     @x_right = @x_start < @x_end ? @x_end : @x_start
   end
+
+  def is_diagonal?(x_end, y_end)
+      diff_x = (x_end - horizontal horizontal_position).abs
+      diff_y = (y_end - vertical_position).abs
+      return true if diff_y == diff_x
+      false
+  end
+
+  def is_horizontal_or_vertical?(x_end, y_end)
+    horizontal_only = x_end != horizontal_position && y_end == vertical_position
+    vertical_only = x_end == horizontal_position && y_end != vertical_position
+    return true if horizontal_move || vertical_move
+    false
+  end
+
+  def did_not_move?(x_end, y_end)
+    return true if x_end == horizontal_position && y_end == vertical_position
+  end
 end
