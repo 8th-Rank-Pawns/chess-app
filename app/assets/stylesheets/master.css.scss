@@ -29,6 +29,7 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
+  width: 1200px;
 }
 
 .row {
@@ -74,16 +75,10 @@ body {
 }
 
 .piece-image {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 10px;
-  display: block;
-}
-
-.row > div.change-padding:after {
-  content: "";
-  display: block;
-  padding-bottom: 10%;
+  width: 50px;
+  float: left;
+  margin-left: 12px;
+  margin-top: 12px;
 }
 
 li#prof_pic {
@@ -99,4 +94,8 @@ li#user_name {
 li#special > a{
   color: white;
   font-weight: bold;
+}
+
+.highlight {
+  background: yellow;
 }

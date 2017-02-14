@@ -4,9 +4,12 @@
   <% board.each_with_index do |row, index| %>
     <div class="row">
       <% row.each do |x| %>
-        <div class=<%= change_padding(x, index + 1) %>>
-          <% location = @game.pieces.where(horizontal_position: row, vertical_position: index + 1).last %>
-          <%= link_to render_piece(x, index + 1), piece_path(location) %>
+        <% y = index + 1 %>
+        <div>
+          <% location = locate_piece(x, y) %>
+          <% if !location.nil? %>
+            <%= link_to render_piece(x, y), piece_path(location) %>
+          <% end %>
         </div>
       <% end %>
     </div>
