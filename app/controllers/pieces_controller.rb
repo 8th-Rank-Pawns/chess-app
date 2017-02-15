@@ -13,15 +13,16 @@ class PiecesController < ApplicationController
   private
 
   def piece_params
-    params[:piece] = if params.key? :king
+    params[:piece] = case @piece.type
+                     when 'King'
                        params.delete :king
-                     elsif params.key? :queen
+                     when 'Queen'
                        params.delete :queen
-                     elsif params.key? :rook
+                     when 'Rook'
                        params.delete :rook
-                     elsif params.key? :knight
+                     when 'Knight'
                        params.delete :knight
-                     elsif params.key? :bishop
+                     when 'Bishop'
                        params.delete :bishop
                      else
                        params.delete :pawn
