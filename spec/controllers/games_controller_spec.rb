@@ -49,26 +49,9 @@ RSpec.describe GamesController, type: :controller do
     it 'should successfully update the game black_player to the currently logged-in user id' do
       game = FactoryGirl.create(:fullgame)
       user = FactoryGirl.create(:user)
-      put :update, fullgame: { black_player: user.id}
-      game.reload
+      put :update, fullgame: { black_player: user.id }
+      redirect_to game_path(game)
       expect(black_player.id).to eq user.id
-    end
-
-    it 'should have http 404 error if the game could not be found' do
-
     end
   end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
