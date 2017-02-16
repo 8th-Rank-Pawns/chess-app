@@ -57,6 +57,24 @@ class Piece < ActiveRecord::Base
     end
   end
 
+  def diagonal?(x_end, y_end)
+    diff_x = (x_end - horizontal_position).abs
+    diff_y = (y_end - vertical_position).abs
+    return true if diff_y == diff_x
+    false
+  end
+
+  def horizontal_or_vertical?(x_end, y_end)
+    horizontal_move = x_end != horizontal_position && y_end == vertical_position
+    vertical_move = x_end == horizontal_position && y_end != vertical_position
+    return true if horizontal_move || vertical_move
+    false
+  end
+
+  def did_not_move?(x_end, y_end)
+    return true if x_end == horizontal_position && y_end == vertical_position
+  end
+
   private
 
   def find_x_right_and_x_left
