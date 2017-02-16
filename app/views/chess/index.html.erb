@@ -3,9 +3,10 @@
   <h3>
     <% @available_games.each do |game| %>
       <li>
-        <%= link_to "#{game.name} - join game", {:action => :put} %>
+        <%= link_to "#{game.name} - join game", game_path(game), method: :put %>
       </li>
     <% end %>
   </h3>
 </div>
+
 
