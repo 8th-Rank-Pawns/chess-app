@@ -4,7 +4,13 @@
   <% board.each_with_index do |row, index| %>
     <div class="row">
       <% row.each do |x| %>
-        <div class=<%= change_padding(x, index + 1) %>><%= render_piece(x, index + 1) %></div>
+        <% y = index + 1 %>
+        <div>
+          <% location = locate_piece(x, y) %>
+          <% if !location.nil? %>
+            <%= link_to render_piece(x, y), piece_path(location) %>
+          <% end %>
+        </div>
       <% end %>
     </div>
   <% end %>
