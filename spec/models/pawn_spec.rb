@@ -14,19 +14,19 @@ RSpec.describe Pawn, type: :model do
     end
 
     context 'when moves 2 on first move' do
-      it { expect(pawn.valid_move?(4, 4)).to eq true}
+      it { expect(pawn.valid_move?(4, 4)).to eq true }
     end
 
     context 'when move is horizontal' do
-      it { expect(pawn.valid_move?(3, 2)).to eq false}
+      it { expect(pawn.valid_move?(3, 2)).to eq false }
     end
 
     context 'when move is diagonal no capture' do
-      it { expect(pawn.valid_move?(3, 3)).to eq false}
+      it { expect(pawn.valid_move?(3, 3)).to eq false }
     end
 
     context 'when pawn did not move' do
-      it { expect(pawn.valid_move?(4, 2)).to eq false}
+      it { expect(pawn.valid_move?(4, 2)).to eq false }
     end
 
     context 'when obstructed' do
@@ -63,7 +63,7 @@ RSpec.describe Pawn, type: :model do
     let(:pawn) { FactoryGirl.create(:pawn, horizontal_position: 7, vertical_position: 3, color: 'white', game: game) }
 
     context 'moves 2 when not first move' do
-      it { expect(pawn.valid_move?(7, 5)).to eq false}
+      it { expect(pawn.valid_move?(7, 5)).to eq false }
     end
   end
 
