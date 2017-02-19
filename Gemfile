@@ -45,6 +45,7 @@ gem 'sprockets', '2.11.0'
 
 group :development, :test do
   gem 'factory_girl_rails', '~>4.0'
+  gem 'pry-rails'
   gem 'rspec-rails', '~> 3.5'
 end
 
