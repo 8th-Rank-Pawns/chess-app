@@ -52,7 +52,7 @@ RSpec.describe GamesController, type: :controller do
       sign_in user
       put :update, id: game.id, game: { black_player: user.id }
       game.reload
-      expect(game.black_player).to eq (user.id)
+      expect(game.black_player).to eq user.id
     end
   end
 end
