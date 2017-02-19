@@ -81,4 +81,25 @@ class Piece < ActiveRecord::Base
     @x_left = @x_start < @x_end ? @x_start : @x_end
     @x_right = @x_start < @x_end ? @x_end : @x_start
   end
+
+  def move_to! (new_x, new_y)
+    # Set an enemy_piece so that the code references the same piece throughout the method.
+    enemy_piece = game.piece.where(horizontal_position: new_x, vertical_position: new_y)
+    # Step 1: Check to see if a piece occupies the new location.
+    if enemy_piece.present?
+      # Step 2: Check to see if the piece is of the oppposite color.
+      if enemy_piece[:color] != Piece[:color]
+        # Step 3: Remove piece from the board.
+        enemy_piece.update_attributes(horizontal_position: nil, vertical_position: nil)
+        # Update Piece position to new_x, new_y
+        Piece.update_attributes(horizontal_position: new_x, vertical_position: new_y)
+      else
+        # If the piece is the same color, then alert the user that the move is invalid.
+        alert: "Not a valid move"
+        break
+      end
+    else
+      Piece.update_attributes(horizontal_position: new_x, vertical_position: new_y)
+    end
+  end
 end
