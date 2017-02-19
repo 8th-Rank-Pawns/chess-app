@@ -25,7 +25,7 @@ class Pawn < Piece
 
   def diagonal_capture?(x_end, y_end)
     return true if color == 'white' && game.pieces.where(horizontal_position: x_end, vertical_position: y_end, color: 'black').present?
-    return true if color == 'black' && game.pieces.where(horizontal_position: x_end, vertical_position: y_end, color: 'white').present?
+    color == 'black' && game.pieces.where(horizontal_position: x_end, vertical_position: y_end, color: 'white').present?
   end
 
   def piece_in_front?(x_end, y_end, diff_x, diff_y)
@@ -34,7 +34,7 @@ class Pawn < Piece
 
   def move_one_or_two(diff_x, diff_y)
     return false if diff_y == 2 && !first_move?
-    return true if (diff_y == 1 || diff_y == 2) && diff_x.zero?
+    (diff_y == 1 || diff_y == 2) && diff_x.zero?
   end
 
   def first_move?
