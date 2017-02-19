@@ -29,6 +29,7 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
+  width: 1200px;
 }
 
 .row {
@@ -62,7 +63,7 @@ body {
 }
 
 .row:nth-child(even) > div:nth-child(odd), .row:nth-child(odd) > div:nth-child(even) {
-  background: black;
+  background: brown;
 }
 
 .row:first-of-type > div {
@@ -71,4 +72,30 @@ body {
 
 .row:last-of-type > div {
   border-bottom: 1px solid gray;
+}
+
+.piece-image {
+  width: 50px;
+  float: left;
+  margin-left: 12px;
+  margin-top: 12px;
+}
+
+li#prof_pic {
+  padding-top: 8px;
+}
+
+li#user_name {
+  color: white;
+  padding-top: 15px;
+  margin-left: 5px;
+}
+
+li#special > a{
+  color: white;
+  font-weight: bold;
+}
+
+.highlight {
+  background: yellow;
 }

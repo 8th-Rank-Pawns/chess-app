@@ -1,10 +1,16 @@
 <div class="board">
   <% board = Array.new(8) %>
   <% board.map! {Array(1..8)}%>
-  <% board.each do |row| %>
+  <% board.each_with_index do |row, index| %>
     <div class="row">
-      <% row.each do || %>
-        <div></div>
+      <% row.each do |x| %>
+        <% y = index + 1 %>
+        <div>
+          <% location = locate_piece(x, y) %>
+          <% if !location.nil? %>
+            <%= link_to render_piece(x, y), piece_path(location) %>
+          <% end %>
+        </div>
       <% end %>
     </div>
   <% end %>
