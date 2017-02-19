@@ -33,7 +33,7 @@ class Piece < ActiveRecord::Base
   def diagonal_check
     find_x_right_and_x_left
     count = 1
-    while count < x_right - x_left
+    while count < @x_right - @x_left
       return true if @y_end > @y_start && game.pieces.where(horizontal_position: @x_left + count, vertical_position: @y_start + count).present?
       return true if @y_end > @y_start && game.pieces.where(horizontal_position: @x_left + count, vertical_position: @y_start - count).present?
       count += 1
