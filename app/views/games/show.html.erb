@@ -1,6 +1,8 @@
 <script>
   $(function() {
-    $('.drag').draggable();
+    $('.drag').draggable({
+      revert: "invalid"
+    });
 
     $('.drop').droppable({
       drop: function(event, ui){
