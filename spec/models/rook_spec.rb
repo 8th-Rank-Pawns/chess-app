@@ -41,11 +41,10 @@ RSpec.describe Rook, type: :model do
 
     # should return false once capture logic is entered
     # context 'when making a move to square where piece of same color is present' do
-    #   it 'valid capture' do
-      #   FactoryGirl.create(:pawn, horizontal_position: 3, vertical_position: 4, color: 'white', game: game)
-      #   expect(rook.valid_move?(3, 4)).to eq false
-      # end
+    #   it 'move on same color' do
+    #     FactoryGirl.create(:pawn, horizontal_position: 3, vertical_position: 4, color: 'white', game: game)
+    #     expect(rook.valid_move?(3, 4)).to eq false
+    #   end
     # end
-
   end
 end

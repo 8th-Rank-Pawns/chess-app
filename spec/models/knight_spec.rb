@@ -41,11 +41,10 @@ RSpec.describe Knight, type: :model do
 
     # should return false once capture logic is entered
     # context 'when making a move to square where piece of same color is present' do
-    #   it 'same color returns false' do
+    #   it 'move on same color' do
     #     FactoryGirl.create(:pawn, horizontal_position: 3, vertical_position: 3, color: 'white', game: game)
     #     expect(knight.valid_move?(3, 3)).to eq false
     #   end
     # end
-
   end
 end
