@@ -94,8 +94,8 @@ class Piece < ActiveRecord::Base
     find_x_right_and_x_left
     count = 1
     while count < @x_right - @x_left
-      return true if @y_end > @y_start && game.pieces.where(horizontal_position: @x_start - count, vertical_position: @y_start + count).present?
-      return true if @y_end < @y_start && game.pieces.where(horizontal_position: @x_start - count, vertical_position: @y_start - count).present?
+      return true if diagonal_direction && game.pieces.where(horizontal_position: @x_left + count, vertical_position: @y_bottom + count).present?
+      return true if !diagonal_direction && game.pieces.where(horizontal_position: @x_left + count, vertical_position: @y_top - count).present?
       count += 1
     end
     false
@@ -104,5 +104,11 @@ class Piece < ActiveRecord::Base
   def find_x_right_and_x_left
     @x_left = @x_start < @x_end ? @x_start : @x_end
     @x_right = @x_start < @x_end ? @x_end : @x_start
+    @y_bottom = @y_start < @y_end ? @y_start : @y_end
+    @y_top = @y_start < @y_end ? @y_end : @y_start
+  end
+
+  def diagonal_direction
+    ((@x_right == @x_start && @y_top == @y_start) || (@x_left == @x_start && @y_bottom == @y_start))
   end
 end
