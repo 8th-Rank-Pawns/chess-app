@@ -20,6 +20,8 @@
           url: desiredUrl,
           data: piece,
           dataType: 'json'
+        }).done(function(){
+          window.location.reload();
         });
       }
     });
