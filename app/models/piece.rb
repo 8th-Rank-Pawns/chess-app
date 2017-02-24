@@ -33,11 +33,11 @@ class Piece < ActiveRecord::Base
     @y_start = vertical_position
     @x_end = x_end
     @y_end = y_end
-    if @x_end == @x_start
+    if x_end == @x_start
       vertical_check
-    elsif @y_end == @y_start
+    elsif y_end == @y_start
       horizontal_check
-    elsif ((@y_end - @y_start) / (@x_end - @x_start)).abs == 1
+    elsif ((y_end - @y_start) / (x_end - @x_start)).abs == 1
       diagonal_check
     else
       false
@@ -63,7 +63,7 @@ class Piece < ActiveRecord::Base
   end
 
   private
-  
+
   def horizontal_check
     if @x_end < @x_start
       (@x_end + 1..@x_start - 1).each do |x_between|
