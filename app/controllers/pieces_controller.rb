@@ -1,7 +1,7 @@
 class PiecesController < ApplicationController
   def update
     @piece = Piece.find(params[:id])
-    @piece.attempt_move(piece_params)
+    @piece.move_to!(piece_params)
     render json: @piece
   end
 
