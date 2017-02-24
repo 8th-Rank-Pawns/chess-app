@@ -3,7 +3,9 @@
     $('.drag').draggable({
       revert: "invalid"
     });
-
+    $('.drag a').bind('click', function(e){
+        e.preventDefault();
+    });
     $('.drop').droppable({
       drop: function(event, ui){
         var desiredUrl = $(ui.draggable.context.innerHTML).attr("href");
