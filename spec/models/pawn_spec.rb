@@ -31,7 +31,7 @@ RSpec.describe Pawn, type: :model do
 
     context 'when obstructed' do
       it 'obtructed returns true' do
-        FactoryGirl.create(:pawn, horizontal_position: 5, vertical_position: 3, color: 'black', game: game)
+        FactoryGirl.create(:pawn, horizontal_position: 4, vertical_position: 3, color: 'black', game: game)
         expect(pawn.valid_move?(4, 4)).to eq false
       end
     end
