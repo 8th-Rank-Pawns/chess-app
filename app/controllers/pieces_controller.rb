@@ -5,6 +5,7 @@ class PiecesController < ApplicationController
   end
 
   def update
+    @piece = Piece.find(params[:id])
     @piece.move_to!(piece_params)
     @piece.game.check?
     respond_to do |format|
