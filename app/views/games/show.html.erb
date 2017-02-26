@@ -1,3 +1,35 @@
+<script>
+  $(function() {
+    $('.drag').draggable({
+      revert: "invalid"
+    });
+    $('.drag a').bind('click', function(e){
+        e.preventDefault();
+    });
+    $('.drop').droppable({
+      drop: function(event, ui){
+        var desiredUrl = $(ui.draggable.context.innerHTML).attr("href");
+        var x = $(this).data('square-x');
+        var y = $(this).data('square-y');
+        console.log(x, y);
+        var piece = { piece: {
+          horizontal_position: x,
+          vertical_position: y
+        } };
+        $(ui.draggable).detach().css({top: 0,left: 0}).appendTo(this);
+        $.ajax({
+          type: 'PUT',
+          url: desiredUrl,
+          data: piece,
+          dataType: 'json'
+        }).done(function(){
+          window.location.reload();
+        });
+      }
+    });
+  });
+</script>
+
 <div class="board">
   <% board = Array.new(8) %>
   <% board.map! {Array(1..8)}%>
@@ -5,10 +37,13 @@
     <div class="row">
       <% row.each do |x| %>
         <% y = index + 1 %>
-        <div>
+        <div class='drop' data-square-x=<%= x %> data-square-y=<%= y %>>
+          <% y = index + 1 %>
           <% location = locate_piece(x, y) %>
           <% if !location.nil? %>
-            <%= link_to render_piece(x, y), piece_path(location) %>
+            <div class='drag'>
+              <%= link_to render_piece(x, y), piece_path(location) %>
+            </div>
           <% end %>
         </div>
       <% end %>
