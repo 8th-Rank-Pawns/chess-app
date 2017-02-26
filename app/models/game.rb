@@ -4,9 +4,11 @@ class Game < ActiveRecord::Base
   has_many :pieces
 
   def populate_board!
-    @white_king = King.create(horizontal_position: 5, vertical_position: 1, color: 'white', game_id: id)
-    @black_king = King.create(horizontal_position: 5, vertical_position: 8, color: 'black', game_id: id)
+    King.create(horizontal_position: 5, vertical_position: 1, color: 'white', game_id: id)
+    King.create(horizontal_position: 5, vertical_position: 8, color: 'black', game_id: id)
     [[1, 'white'], [8, 'black']].each do |x|
+      King.create(horizontal_position: 5, vertical_position: x[0], color: x[1], game_id: id)
+      King.create(horizontal_position: 5, vertical_position: x[0], color: x[1], game_id: id)
       Queen.create(horizontal_position: 4, vertical_position: x[0], color: x[1], game_id: id)
       Bishop.create(horizontal_position: 3, vertical_position: x[0], color: x[1], game_id: id)
       Bishop.create(horizontal_position: 6, vertical_position: x[0], color: x[1], game_id: id)
@@ -23,31 +25,11 @@ class Game < ActiveRecord::Base
     end
   end
 
-  def check?(color)
-    if color == 'white'
-      king_x = @white_king.horizontal_position
-      king_y = @white_king.vertical_position
-    else
-      king_x = @black_king.horizontal_position
-      king_y = @black_king.vertical_position
-    end
-    Piece.where(!color).each do |piece|
-      return true if piece.valid_move?(king_x, king_y)
+  def check?
+    king = King.where(game: self, color: color)
+    Piece.where(color: !king.color).each do |piece|
+      return true if piece.valid_move?(king.horizontal_position, king.vertical_position)
     end
     false
   end
-
-  # def white_king_check?
-  #   Piece.where(color: 'black').each do |piece|
-  #     return true if piece.valid_move?(@white_king.horizontal_position, @white_king.vertical_position)
-  #   end
-  #   false
-  # end
-
-  # def black_king_check?
-  #   Piece.where(color: 'white').each do |piece|
-  #     return true if piece.valid_move?(@black_king.horizontal_position, @black_king.vertical_position)
-  #   end
-  #   false
-  # end
 end
