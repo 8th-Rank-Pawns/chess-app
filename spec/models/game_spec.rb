@@ -19,5 +19,5 @@ RSpec.describe Game, type: :model do
   #     end
   #   end
 
-  # end    
+  # end
 end
