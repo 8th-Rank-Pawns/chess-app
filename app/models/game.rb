@@ -23,17 +23,31 @@ class Game < ActiveRecord::Base
     end
   end
 
-  def white_king_check?
-    pieces.where(color: 'black').each do |piece|
-      return true if piece.valid_move?(@white_king.horizontal_position, @white_king.vertical_position)
-      false
+  def check?(color)
+    if color == 'white'
+      king_x = @white_king.horizontal_position
+      king_y = @white_king.vertical_position
+    else
+      king_x = @black_king.horizontal_position
+      king_y = @black_king.vertical_position
     end
+    Piece.where(!color).each do |piece|
+      return true if piece.valid_move?(king_x, king_y)
+    end
+    false
   end
 
-  def black_king_check?
-    pieces.where(color: 'white').each do |piece|
-      return true if piece.valid_move?(@black_king.horizontal_position, @black_king.vertical_position)
-      false
-    end
-  end
+  # def white_king_check?
+  #   Piece.where(color: 'black').each do |piece|
+  #     return true if piece.valid_move?(@white_king.horizontal_position, @white_king.vertical_position)
+  #   end
+  #   false
+  # end
+
+  # def black_king_check?
+  #   Piece.where(color: 'white').each do |piece|
+  #     return true if piece.valid_move?(@black_king.horizontal_position, @black_king.vertical_position)
+  #   end
+  #   false
+  # end
 end
