@@ -4,10 +4,7 @@ class Game < ActiveRecord::Base
   has_many :pieces
 
   def populate_board!
-    King.create(horizontal_position: 5, vertical_position: 1, color: 'white', game_id: id)
-    King.create(horizontal_position: 5, vertical_position: 8, color: 'black', game_id: id)
     [[1, 'white'], [8, 'black']].each do |x|
-      King.create(horizontal_position: 5, vertical_position: x[0], color: x[1], game_id: id)
       King.create(horizontal_position: 5, vertical_position: x[0], color: x[1], game_id: id)
       Queen.create(horizontal_position: 4, vertical_position: x[0], color: x[1], game_id: id)
       Bishop.create(horizontal_position: 3, vertical_position: x[0], color: x[1], game_id: id)
