@@ -1,4 +1,6 @@
 class GamesController < ApplicationController
+  before_action :authenticate_user!, only: [:update]
+
   def new
     @game = Game.new
   end
@@ -14,9 +16,17 @@ class GamesController < ApplicationController
     render text: 'Not Found', status: :not_found if @game.blank?
   end
 
+  def update
+    @game = Game.find(params[:id])
+    if @game.black_player != current_user
+      @game.update_attributes(black_player: current_user.id)
+    end
+    redirect_to game_path(@game)
+  end
+
   private
 
   def game_params
-    params.require(:game).permit(:name)
+    params.require(:game).permit(:name, :black_player, :white_player)
   end
 end

@@ -44,4 +44,15 @@ RSpec.describe GamesController, type: :controller do
       expect(response).to have_http_status(:not_found)
     end
   end
+
+  describe 'games#update action' do
+    it 'should successfully update the game black_player to the currently logged-in user id' do
+      game = FactoryGirl.create(:game, black_player: nil)
+      user = FactoryGirl.create(:user)
+      sign_in user
+      put :update, id: game.id, game: { black_player: user.id }
+      game.reload
+      expect(game.black_player).to eq user.id
+    end
+  end
 end
