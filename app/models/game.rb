@@ -21,4 +21,12 @@ class Game < ActiveRecord::Base
       count += 1
     end
   end
+
+  def check?(color)
+    king = King.where(game: self, color: color)
+    Piece.where(game: self).where.not(color: color).each do |piece|
+      return true if piece.valid_move?(king.horizontal_position, king.vertical_position)
+    end
+    false
+  end
 end
