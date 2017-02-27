@@ -7,6 +7,7 @@ RSpec.describe Game, type: :model do
 
   #   context 'when in check' do
   #     it 'returns true when king is in check' do
+  #       king.save
   #       FactoryGirl.create(:bishop, horizontal_position: 3, vertical_position: 3, color: 'black', game: game)
   #       expect(game.check?('white')).to eq true
   #     end
@@ -19,5 +20,5 @@ RSpec.describe Game, type: :model do
   #     end
   #   end
 
-  # end
+  end
 end
