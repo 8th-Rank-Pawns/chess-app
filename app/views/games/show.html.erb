@@ -1,4 +1,9 @@
 <script>
+$( document ).ready(function() {
+    $('#myModal').modal('show');
+    console.log( "ready!" );
+});
+
   $(function() {
     $('.drag').draggable({
       revert: "invalid"
@@ -24,6 +29,7 @@
           dataType: 'json'
         }).done(function(){
           window.location.reload();
+        
         });
       }
     });
@@ -49,4 +55,36 @@
       <% end %>
     </div>
   <% end %>
+</div>
+
+<div class="modal fade" id=<%= pawn_promo %> tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Pawn Promotion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form action="#" class="promotion-choice">
+          <div class="promo-selection-container">
+            <% ['Queen', 'Bishop', 'Rook', 'Knight'].each do |name| %>
+              <div class="promo-selection-choice">              
+                <label for="<%= piece_name = "black#{name}.png" %>">
+
+                <%= image_tag(piece_name, class: 'piece-image') %>
+                  
+                  <%= name %>
+                </label>
+                <input type="radio" name="piece-type" value="<%= name %>" id="<%= name.downcase %>">
+              </div>
+            <% end %>
+        </div>
+        <div class="promo-selection-submit">
+          <input type="submit">
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
 </div>
