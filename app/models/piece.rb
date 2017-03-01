@@ -4,6 +4,7 @@ class Piece < ActiveRecord::Base
   # Every time a piece is moved the "valid_move?" method is called which should call the "is_obstructed?" method and pass it x_end & y_end.
   # If is_obstructed returns false, move is legal.
   # Will write tests after moving pieces action is more clear.
+
   def move_to!(params)
     new_x = params[:horizontal_position].to_i
     new_y = params[:vertical_position].to_i

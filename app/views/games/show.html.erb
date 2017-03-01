@@ -74,17 +74,21 @@ $( document ).ready(function() {
 
                 <%= image_tag(piece_name, class: 'piece-image') %>
                   
-                  <%= name %>
+                <%= name %>
                 </label>
-                <input type="radio" name="piece-type" value="<%= name %>" id="<%= name.downcase %>">
+                <input type="radio" name="p_type" value="<%= name %>" id="<%= name %>">
               </div>
             <% end %>
+            <input type="submit">
         </div>
-        <div class="promo-selection-submit">
-          <input type="submit">
-        </div>
+          
       </form>
       </div>
     </div>
   </div>
+</div>
+
+<div>
+something
+<%= @data %>
 </div>

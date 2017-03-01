@@ -8,4 +8,9 @@ module GamesHelper
   def locate_piece(x, y)
     @game.pieces.where(horizontal_position: x, vertical_position: y).first
   end
+
+  def pawn_promo
+    return "myModal" if @game.pieces.where(type: 'Pawn', vertical_position: 8).first.present? || @game.pieces.where(type: 'Pawn', vertical_position: 1).first.present?
+  end
+
 end

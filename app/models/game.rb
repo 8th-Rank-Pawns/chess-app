@@ -29,4 +29,5 @@ class Game < ActiveRecord::Base
     end
     false
   end
+
 end
