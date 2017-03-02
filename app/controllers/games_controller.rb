@@ -7,7 +7,6 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.create(game_params)
-    @game.update_attributes(active_turn: "white")
     @game.populate_board!
     redirect_to game_path(@game)
   end
@@ -19,6 +18,7 @@ class GamesController < ApplicationController
 
   def update
     @game = Game.find(params[:id])
+    @game.update_attributes(active_turn: "white")
     if @game.black_player != current_user
       @game.update_attributes(black_player: current_user.id)
     end
