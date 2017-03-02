@@ -5,36 +5,40 @@ class King < Piece
     false
   end
 
-  def can_castle(new_x, new_y)
+  def castle_check(new_x, color)
     define_rooks
-    # Need the prevent yourself from moving into check method to cover the remaining restrictions
-    return true if self.castle && self.color == 'white' && @white_queen_rook.castle && new_x == 3 && new_y == 1 && !obstructed?(1, new_y) && self.game.check?('white') == false
-    return true if self.castle && self.color == 'white' && @white_king_rook.castle && new_x == 7 && new_y == 1 && !obstructed?(8, new_y) && self.game.check?('white') == false
-    return true if self.castle && self.color == 'black' && @black_queen_rook.castle && new_x == 3 && new_y == 8 && !obstructed?(1, new_y) && self.game.check?('black') == false
-    return true if self.castle && self.color == 'black' && @black_king_rook.castle && new_x == 7 && new_y == 8 && !obstructed?(8, new_y) && self.game.check?('black') == false
-    return false
+    # Need "prevent yourself from moving into check" method to cover the remaining restrictions
+    return true if new_x == 3 && queen_side_castle_check(color)
+    return true if new_x == 7 && king_side_castle_check(color)
+    false
+  end
+
+  def queen_side_castle_check(color)
+    rook = instance_variable_get("@#{color}_queen_rook")
+    return true if castle && !rook.nil? && rook.castle && !obstructed?(rook.horizontal_position, rook.vertical_position) && game.check?(color) == false
+    false
+  end
+
+  def king_side_castle_check(color)
+    rook = instance_variable_get("@#{color}_king_rook")
+    return true if castle && !rook.nil? && rook.castle && !obstructed?(rook.horizontal_position, rook.vertical_position) && game.check?(color) == false
+    false
   end
 
   def perform_castling(new_x)
     define_rooks
-    self.update_attributes(horizontal_position: new_x, castle: false)
-    if new_x == 3 && self.color == 'white'
-      @white_queen_rook.update_attributes(horizontal_position: 4, castle: false)
-    elsif new_x == 7 && self.color == 'white'
-      @white_king_rook.update_attributes(horizontal_position: 6, castle: false)
-    elsif new_x == 3 && self.color == 'black'
-      @black_queen_rook.update_attributes(horizontal_position: 4, castle: false)
-    else
-      @black_king_rook.update_attributes(horizontal_position: 6, castle: false)
-    end
+
+    update_attributes(horizontal_position: new_x, castle: false)
+    return @white_queen_rook.update_attributes(horizontal_position: 4, castle: false) if new_x == 3 && color == 'white'
+    return @white_king_rook.update_attributes(horizontal_position: 6, castle: false) if new_x == 7 && color == 'white'
+    return @black_queen_rook.update_attributes(horizontal_position: 4, castle: false) if new_x == 3 && color == 'black'
+    return @black_king_rook.update_attributes(horizontal_position: 6, castle: false) if new_x == 7 && color == 'black'
   end
 
   def define_rooks
-    current_game_pieces = self.game.pieces
-    @white_queen_rook = current_game_pieces.find_by(horizontal_position: 1, vertical_position: 1, type: 'Rook')
-    @white_king_rook = current_game_pieces.find_by(horizontal_position: 8, vertical_position: 1, type: 'Rook')
-    @black_queen_rook = current_game_pieces.find_by(horizontal_position: 1, vertical_position: 8, type: 'Rook')
-    @black_king_rook = current_game_pieces.find_by(horizontal_position: 8, vertical_position: 8, type: 'Rook')
+    @white_queen_rook = game.pieces.find_by(horizontal_position: 1, vertical_position: 1, type: 'Rook')
+    @white_king_rook = game.pieces.find_by(horizontal_position: 8, vertical_position: 1, type: 'Rook')
+    @black_queen_rook = game.pieces.find_by(horizontal_position: 1, vertical_position: 8, type: 'Rook')
+    @black_king_rook = game.pieces.find_by(horizontal_position: 8, vertical_position: 8, type: 'Rook')
   end
-
 end

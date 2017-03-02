@@ -17,9 +17,6 @@
           vertical_position: y
         } };
         $(ui.draggable).detach().css({top: 0, left: 0}).appendTo(this);
-        // if (confirm('Are you sure you want to save this thing into the database?')) {
-        //           } else {
-        // }
           $.ajax({
             type: 'PUT',
             url: desiredUrl,
@@ -31,7 +28,6 @@
             }
             // window.location.reload();
           });
-
       }
     });
   });
