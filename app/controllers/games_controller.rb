@@ -7,6 +7,7 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.create(game_params)
+    @game.update_attributes(active_turn: "white")
     @game.populate_board!
     redirect_to game_path(@game)
   end
@@ -27,6 +28,6 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:name, :black_player, :white_player)
+    params.require(:game).permit(:name, :black_player, :white_player, :active_turn)
   end
 end
