@@ -16,15 +16,22 @@
           horizontal_position: x,
           vertical_position: y
         } };
-        $(ui.draggable).detach().css({top: 0,left: 0}).appendTo(this);
-        $.ajax({
-          type: 'PUT',
-          url: desiredUrl,
-          data: piece,
-          dataType: 'json'
-        }).done(function(){
-          window.location.reload();
-        });
+        $(ui.draggable).detach().css({top: 0, left: 0}).appendTo(this);
+        // if (confirm('Are you sure you want to save this thing into the database?')) {
+        //           } else {
+        // }
+          $.ajax({
+            type: 'PUT',
+            url: desiredUrl,
+            data: piece,
+            dataType: 'json'
+          }).done(function(data){
+            if (data.horizontal_position !== x || data.vertical_position !== y) {
+              alert("Illegal move. Try again.");
+            }
+            // window.location.reload();
+          });
+
       }
     });
   });
@@ -50,3 +57,5 @@
     </div>
   <% end %>
 </div>
+<br>
+<h5 id='castling'>Castling (when legal) is performed by moving your King 2 spaces to the left or right.</h5>

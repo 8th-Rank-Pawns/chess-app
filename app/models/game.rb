@@ -5,14 +5,14 @@ class Game < ActiveRecord::Base
 
   def populate_board!
     [[1, 'white'], [8, 'black']].each do |x|
-      King.create(horizontal_position: 5, vertical_position: x[0], color: x[1], game_id: id)
+      King.create(horizontal_position: 5, vertical_position: x[0], color: x[1], game_id: id, castle: true)
       Queen.create(horizontal_position: 4, vertical_position: x[0], color: x[1], game_id: id)
       Bishop.create(horizontal_position: 3, vertical_position: x[0], color: x[1], game_id: id)
       Bishop.create(horizontal_position: 6, vertical_position: x[0], color: x[1], game_id: id)
       Knight.create(horizontal_position: 2, vertical_position: x[0], color: x[1], game_id: id)
       Knight.create(horizontal_position: 7, vertical_position: x[0], color: x[1], game_id: id)
-      Rook.create(horizontal_position: 1, vertical_position: x[0], color: x[1], game_id: id)
-      Rook.create(horizontal_position: 8, vertical_position: x[0], color: x[1], game_id: id)
+      Rook.create(horizontal_position: 1, vertical_position: x[0], color: x[1], game_id: id, castle: true)
+      Rook.create(horizontal_position: 8, vertical_position: x[0], color: x[1], game_id: id, castle: true)
     end
     count = 1
     while count <= 8
@@ -23,7 +23,7 @@ class Game < ActiveRecord::Base
   end
 
   def check?(color)
-    king = King.where(game: self, color: color)
+    king = King.find_by(game: self, color: color)
     Piece.where(game: self).where.not(color: color).each do |piece|
       return true if piece.valid_move?(king.horizontal_position, king.vertical_position)
     end
