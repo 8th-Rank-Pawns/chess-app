@@ -25,14 +25,21 @@ class King < Piece
     false
   end
 
-  def perform_castling(new_x)
+  def perform_castling(new_x, color)
     define_rooks
-
     update_attributes(horizontal_position: new_x, castle: false)
-    return @white_queen_rook.update_attributes(horizontal_position: 4, castle: false) if new_x == 3 && color == 'white'
-    return @white_king_rook.update_attributes(horizontal_position: 6, castle: false) if new_x == 7 && color == 'white'
-    return @black_queen_rook.update_attributes(horizontal_position: 4, castle: false) if new_x == 3 && color == 'black'
-    return @black_king_rook.update_attributes(horizontal_position: 6, castle: false) if new_x == 7 && color == 'black'
+    return perform_queenside_castling(color) if new_x == 3
+    return perform_kingside_castling(color) if new_x == 7
+  end
+
+  def perform_queenside_castling(color)
+    rook = instance_variable_get("@#{color}_queen_rook")
+    rook.update_attributes(horizontal_position: 4, castle: false)
+  end
+
+  def perform_kingside_castling(color)
+    rook = instance_variable_get("@#{color}_king_rook")
+    rook.update_attributes(horizontal_position: 6, castle: false)
   end
 
   def define_rooks
