@@ -20,6 +20,7 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     if @game.black_player != current_user
       @game.update_attributes(black_player: current_user.id)
+      @game.update_attributes(active_turn: "white")
     end
     redirect_to game_path(@game)
   end
@@ -27,6 +28,6 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:name, :black_player, :white_player)
+    params.require(:game).permit(:name, :black_player, :white_player, :active_turn)
   end
 end

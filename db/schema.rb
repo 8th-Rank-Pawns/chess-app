@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170208032501) do
+ActiveRecord::Schema.define(version: 20170302011300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,10 @@ ActiveRecord::Schema.define(version: 20170208032501) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "active_turn"
   end
+
+  add_index "games", ["active_turn"], name: "index_games_on_active_turn", using: :btree
 
   create_table "pieces", force: true do |t|
     t.integer  "vertical_position"
