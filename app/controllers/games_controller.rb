@@ -18,9 +18,9 @@ class GamesController < ApplicationController
 
   def update
     @game = Game.find(params[:id])
-    @game.update_attributes(active_turn: "white")
     if @game.black_player != current_user
       @game.update_attributes(black_player: current_user.id)
+      @game.update_attributes(active_turn: "white")
     end
     redirect_to game_path(@game)
   end
