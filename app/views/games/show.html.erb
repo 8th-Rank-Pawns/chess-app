@@ -57,38 +57,40 @@ $( document ).ready(function() {
   <% end %>
 </div>
 
-<div class="modal fade" id=<%= pawn_promo %> tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id=<%= promo_modal %> role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Pawn Promotion</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h4 class="modal-title" id="exampleModalLabel">Promote Your Pawn</h4>
       </div>
-        <form action="#" class="promotion-choice">
-          <div class="promo-selection-container">
-            <% ['Queen', 'Bishop', 'Rook', 'Knight'].each do |name| %>
-              <div class="promo-selection-choice">              
-                <label for="<%= piece_name = "black#{name}.png" %>">
-
+      <form action="#">
+        <div class="promo-selection-container">
+          <div class="checkboxgroup">
+            <label for="<%= pawn_color %>Queen.png" class="radio-label">
+              <%= image_tag("#{pawn_color}Queen.png", class: 'piece-image') %>
+              <br />
+              Queen
+            </label>
+            <input class="radio-input" type="radio" name="p_type" value="Queen" id="Queen" checked="checked">
+          </div>
+          <% ['Knight', 'Rook', 'Bishop'].each do |name| %>             
+            <div class="checkboxgroup">
+              <label for=<%= piece_name = "#{pawn_color}#{name}.png" %>>
                 <%= image_tag(piece_name, class: 'piece-image') %>
-                  
+              <br />
                 <%= name %>
-                </label>
-                <input type="radio" name="p_type" value="<%= name %>" id="<%= name %>">
-              </div>
-            <% end %>
-            <input type="submit">
+              </label>
+              <input type="radio" name="p_type" value="<%= name %>" id="<%= name %>">
+            </div>
+          <% end %>
+          <br />
+          <br />
+          <input type="submit" class="btn btn-primary">
         </div>
-          
       </form>
+      <br />
       </div>
     </div>
   </div>
 </div>
-
-<div>
-something
-<%= @data %>
-</div>
+<br />

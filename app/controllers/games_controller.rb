@@ -13,14 +13,13 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find_by_id(params[:id])
-    
-    @data = params[:p_type]
-    
-    while !@data.nil?
-      @game.pieces.where(type: 'Pawn', vertical_position: 1).first.try(:update_attributes, :type => @data)
-      @game.pieces.where(type: 'Pawn', vertical_position: 8).first.try(:update_attributes, :type => @data)
-      params[:p_type] = nil
-      @data = params[:p_type]
+
+    data = params[:p_type]
+
+    until data.nil?
+      @game.pieces.where(type: 'Pawn', vertical_position: 1).first.try(:update_attributes, type: data)
+      @game.pieces.where(type: 'Pawn', vertical_position: 8).first.try(:update_attributes, type: data)
+      data = params[:p_type] = nil
       redirect_to game_path(@game)
     end
 

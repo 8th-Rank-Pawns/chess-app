@@ -9,8 +9,22 @@ module GamesHelper
     @game.pieces.where(horizontal_position: x, vertical_position: y).first
   end
 
-  def pawn_promo
-    return "myModal" if @game.pieces.where(type: 'Pawn', vertical_position: 8).first.present? || @game.pieces.where(type: 'Pawn', vertical_position: 1).first.present?
+  def promo_modal
+    return 'myModal' if white_eighth_rank_pawn || black_eighth_rank_pawn
   end
 
+  def pawn_color
+    return 'white' if white_eighth_rank_pawn
+    'black'
+  end
+
+  private
+
+  def white_eighth_rank_pawn
+    @game.pieces.where(type: 'Pawn', vertical_position: 8).first.present?
+  end
+
+  def black_eighth_rank_pawn
+    @game.pieces.where(type: 'Pawn', vertical_position: 1).first.present?
+  end
 end
