@@ -31,13 +31,69 @@ RSpec.describe King, type: :model do
         expect(king.valid_move?(3, 4)).to eq true
       end
     end
+  end
 
-    # should return false once capture logic is entered
-    # context 'when making a move to square where piece of same color is present' do
-    #   it 'move on same color' do
-    #     FactoryGirl.create(:pawn, horizontal_position: 3, vertical_position: 4, color: 'white', game: game)
-    #     expect(king.valid_move?(3, 4)).to eq false
-    #   end
-    # end
+  describe '.can_castle?' do
+    context 'returns true when castling is legal' do
+      game = FactoryGirl.create(:game)
+      game.populate_board!
+      game.pieces.where(type: %w(Queen Bishop Knight)).delete_all
+      black_king = game.pieces.find_by(type: 'King', color: 'black')
+      white_king = game.pieces.find_by(type: 'King', color: 'white')
+
+      it 'black can castle queenside' do
+        expect(black_king.can_castle?(3, 8, 'black')).to eq(true)
+      end
+
+      it 'black can castle kingside' do
+        expect(black_king.can_castle?(7, 8, 'black')).to eq(true)
+      end
+
+      it 'white can castle queenside' do
+        expect(white_king.can_castle?(3, 1, 'white')).to eq(true)
+      end
+
+      it 'white can castle kingside' do
+        expect(white_king.can_castle?(7, 1, 'white')).to eq(true)
+      end
+    end
+
+    context 'returns false when castling is illegal' do
+      game = FactoryGirl.create(:game)
+      game.populate_board!
+      black_king = game.pieces.find_by(type: 'King', color: 'black')
+      white_king = game.pieces.find_by(type: 'King', color: 'white')
+      white_rook = game.pieces.find_by(horizontal_position: 8, vertical_position: 1)
+
+      it 'has pieces in the way' do
+        expect(black_king.can_castle?(3, 8, 'black')).to eq(false)
+        expect(black_king.can_castle?(7, 8, 'black')).to eq(false)
+        expect(white_king.can_castle?(3, 1, 'white')).to eq(false)
+        expect(white_king.can_castle?(7, 1, 'white')).to eq(false)
+      end
+
+      it 'king has moved from it\'s starting position prior to castling attempt' do
+        game.pieces.where(type: %w(Queen Bishop Knight)).delete_all
+        expect(black_king.can_castle?(3, 8, 'black')).to eq(true)
+        black_king.move_to!(horizontal_position: 4, vertical_position: 8)
+        black_king.move_to!(horizontal_position: 5, vertical_position: 8)
+        expect(black_king.can_castle?(3, 8, 'black')).to eq(false)
+      end
+
+      it 'rook has moved from it\'s starting position prior to castling attempt' do
+        game.pieces.where(type: %w(Queen Bishop Knight)).delete_all
+        expect(white_king.can_castle?(7, 1, 'white')).to eq(true)
+        white_rook.move_to!(horizontal_position: 6, vertical_position: 1)
+        white_rook.move_to!(horizontal_position: 8, vertical_position: 1)
+        expect(white_king.can_castle?(7, 1, 'white')).to eq(false)
+      end
+
+      it 'king is in check' do
+        game.pieces.where(type: %w(Queen Bishop Knight)).delete_all
+        FactoryGirl.create(:knight, horizontal_position: 6, vertical_position: 3, color: 'black', game: game)
+        expect(white_king.can_castle?(3, 1, 'white')).to eq(false)
+        expect(white_king.can_castle?(7, 1, 'white')).to eq(false)
+      end
+    end
   end
 end

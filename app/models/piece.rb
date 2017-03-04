@@ -7,7 +7,7 @@ class Piece < ActiveRecord::Base
   def move_to!(params)
     new_x = params[:horizontal_position].to_i
     new_y = params[:vertical_position].to_i
-    @chess_piece = game.pieces.where(horizontal_position: new_x, vertical_position: new_y).first
+    @chess_piece = game.pieces.find_by(horizontal_position: new_x, vertical_position: new_y)
     if @chess_piece && valid_move?(new_x, new_y)
       can_capture?(new_x, new_y)
     elsif valid_move?(new_x, new_y)
