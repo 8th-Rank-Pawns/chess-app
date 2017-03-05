@@ -17,12 +17,16 @@ class Piece < ActiveRecord::Base
         enemy_piece.update_attributes(horizontal_position: nil, vertical_position: nil)
         # Update Piece position to new_x, new_y
         update_attributes(horizontal_position: new_x, vertical_position: new_y)
+        # Is game in check?
+        check?(color)
       else
         # If the piece is the same color, then alert the user that the move is invalid.
         false
       end
     elsif valid_move?(new_x, new_y)
       update_attributes(horizontal_position: new_x, vertical_position: new_y)
+      # Is game in check?
+      check?(color)
     else
       false
     end

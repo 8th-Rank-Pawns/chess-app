@@ -6,6 +6,9 @@ class GamesController < ApplicationController
   def create
     @game = Game.create(game_params)
     @game.populate_board!
+    if @game.check?(:color)
+      flash[:notice] = 'Check!'
+    end
     redirect_to game_path(@game)
   end
 
