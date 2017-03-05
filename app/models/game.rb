@@ -23,7 +23,8 @@ class Game < ActiveRecord::Base
   end
 
   def check?(color)
-    king = King.where(game: self, color: color)
+    king = King.find_by(game: self, color: color)
+    binding.pry
     Piece.where(game: self).where.not(color: color).each do |piece|
       return true if piece.valid_move?(king.horizontal_position, king.vertical_position)
     end
