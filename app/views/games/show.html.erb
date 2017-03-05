@@ -1,9 +1,4 @@
 <script>
-$( document ).ready(function() {
-    $('#myModal').modal('show');
-    console.log( "ready!" );
-});
-
   $(function() {
     $('.drag').draggable({
       revert: "invalid"
@@ -11,6 +6,7 @@ $( document ).ready(function() {
     $('.drag a').bind('click', function(e){
         e.preventDefault();
     });
+
     $('.drop').droppable({
       drop: function(event, ui){
         var desiredUrl = $(ui.draggable.context.innerHTML).attr("href");
@@ -21,15 +17,25 @@ $( document ).ready(function() {
           horizontal_position: x,
           vertical_position: y
         } };
+        var type = $(ui.draggable.context.outerHTML).attr("data-piece-type");
+        console.log(type);
         $(ui.draggable).detach().css({top: 0,left: 0}).appendTo(this);
         $.ajax({
           type: 'PUT',
           url: desiredUrl,
           data: piece,
           dataType: 'json'
-        }).done(function(){
-          window.location.reload();
-        
+        }).done(function(data){
+          if (data.horizontal_position !== x || data.vertical_position !== y) {
+            alert("Illegal move. Try again.");
+            window.location.reload();
+          }
+          else if (type == 'Pawn' && (data.vertical_position == 1 || data.vertical_position == 8)) {
+            $('#myModal').modal('show');
+          }
+          else {
+            window.location.reload();
+          }
         });
       }
     });
@@ -47,7 +53,7 @@ $( document ).ready(function() {
           <% y = index + 1 %>
           <% location = locate_piece(x, y) %>
           <% if !location.nil? %>
-            <div class='drag'>
+            <div class='drag' data-piece-type=<%= location.type %>>
               <%= link_to render_piece(x, y), piece_path(location) %>
             </div>
           <% end %>
@@ -57,7 +63,7 @@ $( document ).ready(function() {
   <% end %>
 </div>
 
-<div class="modal fade" id=<%= promo_modal %> role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id='myModal' role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
