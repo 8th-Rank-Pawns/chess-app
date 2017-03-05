@@ -30,7 +30,14 @@
             alert("Illegal move. Try again.");
             window.location.reload();
           }
-          else if (type == 'Pawn' && (data.vertical_position == 1 || data.vertical_position == 8)) {
+          else if (type == 'Pawn' && (data.vertical_position == 8)) {
+            $('#myModal').modal('show');
+          }
+          else if (type == 'Pawn' && (data.vertical_position == 1)) {
+            document.getElementById("q").src = q.src.replace("white", "black");
+            document.getElementById("k").src = k.src.replace("white", "black");
+            document.getElementById("r").src = r.src.replace("white", "black");
+            document.getElementById("b").src = b.src.replace("white", "black");                        
             $('#myModal').modal('show');
           }
           else {
@@ -63,7 +70,7 @@
   <% end %>
 </div>
 
-<div class="modal fade" id='myModal' role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id='myModal' role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -72,23 +79,37 @@
       <form action="#">
         <div class="promo-selection-container">
           <div class="checkboxgroup">
-            <label for="<%= pawn_color %>Queen.png" class="radio-label">
-              <%= image_tag("#{pawn_color}Queen.png", class: 'piece-image') %>
+            <label for="Queen.png" class="radio-label">
+              <img src="/assets/whiteQueen.png" id="q" class="piece-image">
               <br />
               Queen
             </label>
-            <input class="radio-input" type="radio" name="p_type" value="Queen" id="Queen" checked="checked">
+            <input class="radio-input" type="radio" name="p_type" value="Queen" checked="checked">
           </div>
-          <% ['Knight', 'Rook', 'Bishop'].each do |name| %>             
-            <div class="checkboxgroup">
-              <label for=<%= piece_name = "#{pawn_color}#{name}.png" %>>
-                <%= image_tag(piece_name, class: 'piece-image') %>
+          <div class="checkboxgroup">
+            <label for="Knight.png" class="radio-label">
+              <img src="/assets/whiteKnight.png" class="piece-image" id="k">
               <br />
-                <%= name %>
-              </label>
-              <input type="radio" name="p_type" value="<%= name %>" id="<%= name %>">
-            </div>
-          <% end %>
+              Knight
+            </label>
+            <input class="radio-input" type="radio" name="p_type" value="Knight">
+          </div>
+          <div class="checkboxgroup">
+            <label for="Rook.png" class="radio-label">
+              <img src="/assets/whiteRook.png" class="piece-image" id="r">
+              <br />
+              Rook
+            </label>
+            <input class="radio-input" type="radio" name="p_type" value="Rook">
+          </div>
+          <div class="checkboxgroup">
+            <label for="Bishop" class="radio-label">
+              <img src="/assets/whiteBishop.png" class="piece-image" id="b">
+              <br />
+              Bishop
+            </label>
+            <input class="radio-input" type="radio" name="p_type" value="Bishop">
+          </div>
           <br />
           <br />
           <input type="submit" class="btn btn-primary">

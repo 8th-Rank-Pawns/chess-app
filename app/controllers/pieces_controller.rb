@@ -11,6 +11,6 @@ class PiecesController < ApplicationController
   private
 
   def piece_params
-    params.require(:piece).permit(:horizontal_position, :vertical_position, :type)
+    params.require(:piece).permit(:horizontal_position, :vertical_position)
   end
 end
