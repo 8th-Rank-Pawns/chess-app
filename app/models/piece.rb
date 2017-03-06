@@ -7,7 +7,6 @@ class Piece < ActiveRecord::Base
   def move_to!(params)
     new_x = params[:horizontal_position].to_i
     new_y = params[:vertical_position].to_i
-    opposite_color = color == 'white' ? 'black' : 'white'
     # Set an enemy_piece so that the code references the same piece throughout the method.
     enemy_piece = game.pieces.where(horizontal_position: new_x, vertical_position: new_y).first
     # Step 1: Check to see if a piece occupies the new location.
