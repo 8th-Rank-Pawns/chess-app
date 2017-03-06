@@ -7,6 +7,7 @@ class Piece < ActiveRecord::Base
   def move_to!(params)
     new_x = params[:horizontal_position].to_i
     new_y = params[:vertical_position].to_i
+    opposite_color = color == 'white' ? 'black' : 'white'
     # Set an enemy_piece so that the code references the same piece throughout the method.
     enemy_piece = game.pieces.where(horizontal_position: new_x, vertical_position: new_y).first
     # Step 1: Check to see if a piece occupies the new location.
@@ -14,23 +15,15 @@ class Piece < ActiveRecord::Base
       # Step 2: Check to see if the piece is of the oppposite color.
       if color != enemy_piece[:color]
         # Step 3: Remove piece from the board.
-        enemy_piece.update_attributes(horizontal_position: nil, vertical_position: nil)
+        enemy_piece.destroy
         # Update Piece position to new_x, new_y
         update_attributes(horizontal_position: new_x, vertical_position: new_y)
-        # Is game in check?
-        if game.check?(color)
-          flash[:notice] = 'Check!'
-        end
       else
         # If the piece is the same color, then alert the user that the move is invalid.
         false
       end
     elsif valid_move?(new_x, new_y)
       update_attributes(horizontal_position: new_x, vertical_position: new_y)
-      # Is game in check?
-      if game.check?(color)
-        flash[:notice] = 'Check!'
-      end
     else
       false
     end
