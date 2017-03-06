@@ -43,6 +43,14 @@ RSpec.describe GamesController, type: :controller do
       get :show, id: 'Checkers'
       expect(response).to have_http_status(:not_found)
     end
+
+    it 'should update a promoted pawn' do
+      game = FactoryGirl.create(:game)
+      FactoryGirl.create(:pawn, horizontal_position: 4, vertical_position: 1, color: 'white', game: game)
+      get :show, id: game.id, p_type: 'Queen'
+      promoted = game.pieces.where(horizontal_position: 4, vertical_position: 1).first.type
+      expect(promoted).to eq('Queen')
+    end
   end
 
   describe 'games#update action' do
