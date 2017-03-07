@@ -10,6 +10,8 @@ RSpec.describe GamesController, type: :controller do
 
   describe 'games#create action' do
     it 'should successfully create a game in our database & redirect to new game' do
+      user = FactoryGirl.create(:user)
+      sign_in user
       post :create, game: { name: 'Player 1' }
       game = Game.last
       expect(response).to redirect_to game_path(game.id)
@@ -17,6 +19,8 @@ RSpec.describe GamesController, type: :controller do
     end
 
     it 'should populate board with pieces in correct starting positions after game creation' do
+      user = FactoryGirl.create(:user)
+      sign_in user
       post :create, game: { name: 'Player 1' }
       game = Game.last
       piece_king = game.pieces.where(horizontal_position: 5, vertical_position: 1).first.type
@@ -47,9 +51,9 @@ RSpec.describe GamesController, type: :controller do
 
   describe 'games#update action' do
     it 'should successfully update the game black_player to the currently logged-in user id' do
-      game = FactoryGirl.create(:game, black_player: nil)
       user = FactoryGirl.create(:user)
       sign_in user
+      game = FactoryGirl.create(:game)
       put :update, id: game.id, game: { black_player: user.id }
       game.reload
       expect(game.black_player).to eq user.id
