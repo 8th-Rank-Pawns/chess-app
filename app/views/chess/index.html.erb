@@ -18,7 +18,7 @@
             <%= player.email %>
           <% end %>
         </p>
-        <<%= link_to "Join game", game_path(game), method: :put, class: 'btn btn-xs btn-success' %><br><br>
+        <%= link_to "Join game", game_path(game), method: :put, class: 'btn btn-xs btn-success' %><br><br>
       </div><br>
     <% end %>
   </div>
@@ -42,7 +42,7 @@
               <%= player2.email %>
             <% end %>
           </p>
-          <<%= link_to "Spectate", game_path(game), class: 'btn btn-xs btn-default' %><br><br>
+          <%= link_to "Spectate", game_path(game), class: 'btn btn-xs btn-default' %><br><br>
         </div><br>
       <% end %>
   </div>
