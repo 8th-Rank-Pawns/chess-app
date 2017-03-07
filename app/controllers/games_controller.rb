@@ -6,7 +6,7 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.create(game_params)
+    @game = Game.create(game_params.merge(white_player: current_user.id))
     @game.populate_board!
     redirect_to game_path(@game)
   end
@@ -18,7 +18,7 @@ class GamesController < ApplicationController
 
   def update
     @game = Game.find(params[:id])
-    if @game.black_player != current_user
+    if @game.black_player == nil
       @game.update_attributes(black_player: current_user.id)
     end
     redirect_to game_path(@game)
@@ -27,6 +27,6 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:name, :black_player, :white_player)
+    params.require(:game).permit(:name)
   end
 end
