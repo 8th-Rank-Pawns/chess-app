@@ -6,7 +6,7 @@
     $('.drag a').bind('click', function(e){
         e.preventDefault();
     });
-    
+
     $('.drop').droppable({
       drop: function(event, ui){
         var desiredUrl = $(ui.draggable.context.innerHTML).attr("href");
@@ -17,6 +17,8 @@
           horizontal_position: x,
           vertical_position: y
         } };
+        var type = $(ui.draggable.context.outerHTML).attr("data-piece-type");
+        console.log(type);
         $(ui.draggable).detach().css({top: 0, left: 0}).appendTo(this);
         $.ajax({
           type: 'PUT',
@@ -65,7 +67,7 @@
           <% y = index + 1 %>
           <% location = locate_piece(x, y) %>
           <% if !location.nil? %>
-            <div class='drag'>
+            <div class='drag' data-piece-type=<%= location.type %>>
               <%= link_to render_piece(x, y), piece_path(location) %>
             </div>
           <% end %>
@@ -85,7 +87,7 @@
     <% end %>
   <% end %>
 </div>
-<br>
+<br/>
 <h5 id='castling'>Castling (when legal) is performed by moving your King 2 spaces to the left or right.</h5>
 
 <div class="modal fade" id='myModal' role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
@@ -104,30 +106,16 @@
             </label>
             <input class="radio-input" type="radio" name="p_type" value="Queen" checked="checked">
           </div>
-          <div class="checkboxgroup">
-            <label for="Knight.png" class="radio-label">
-              <img src="/assets/whiteKnight.png" class="piece-image" id="k">
-              <br />
-              Knight
-            </label>
-            <input class="radio-input" type="radio" name="p_type" value="Knight">
-          </div>
-          <div class="checkboxgroup">
-            <label for="Rook.png" class="radio-label">
-              <img src="/assets/whiteRook.png" class="piece-image" id="r">
-              <br />
-              Rook
-            </label>
-            <input class="radio-input" type="radio" name="p_type" value="Rook">
-          </div>
-          <div class="checkboxgroup">
-            <label for="Bishop" class="radio-label">
-              <img src="/assets/whiteBishop.png" class="piece-image" id="b">
-              <br />
-              Bishop
-            </label>
-            <input class="radio-input" type="radio" name="p_type" value="Bishop">
-          </div>
+          <% ['Knight', 'Rook', 'Bishop'].each do |name| %>             
+            <div class="checkboxgroup">
+              <label for="white<%= name %>.png">
+                <img src="/assets/white<%= name %>.png" id="<%= name.chars.first.downcase %>" class="piece-image">
+                <br />
+                <%= name %>
+              </label>
+              <input type="radio" name="p_type" value="<%= name %>" id="<%= name %>">
+            </div>
+          <% end %>
           <br />
           <br />
           <input type="submit" class="btn btn-primary">
@@ -135,5 +123,6 @@
       </form>
       <br />
       </div>
+      </div>
     </div>
-  </div>
+</div>
