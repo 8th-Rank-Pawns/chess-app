@@ -13,6 +13,7 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find_by_id(params[:id])
+
     data = params[:p_type]
 
     until data.nil?
@@ -21,6 +22,7 @@ class GamesController < ApplicationController
       data = params[:p_type] = nil
       redirect_to game_path(@game)
     end
+
     render text: 'Not Found', status: :not_found if @game.blank?
   end
 
