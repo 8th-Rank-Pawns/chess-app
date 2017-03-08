@@ -6,6 +6,7 @@
     $('.drag a').bind('click', function(e){
         e.preventDefault();
     });
+
     $('.drop').droppable({
       drop: function(event, ui){
         var desiredUrl = $(ui.draggable.context.innerHTML).attr("href");
@@ -16,18 +17,33 @@
           horizontal_position: x,
           vertical_position: y
         } };
+        var type = $(ui.draggable.context.outerHTML).attr("data-piece-type");
+        console.log(type);
         $(ui.draggable).detach().css({top: 0, left: 0}).appendTo(this);
-          $.ajax({
-            type: 'PUT',
-            url: desiredUrl,
-            data: piece,
-            dataType: 'json'
-          }).done(function(data){
-            if (data.horizontal_position !== x || data.vertical_position !== y) {
-              alert("Illegal move. Try again.");
-            }
+        $.ajax({
+          type: 'PUT',
+          url: desiredUrl,
+          data: piece,
+          dataType: 'json'
+        }).done(function(data){
+          if (data.horizontal_position !== x || data.vertical_position !== y) {
+            alert("Illegal move. Try again.");
             window.location.reload();
-          });
+          }
+          else if (type == 'Pawn' && (data.vertical_position == 8)) {
+            $('#myModal').modal('show');
+          }
+          else if (type == 'Pawn' && (data.vertical_position == 1)) {
+            document.getElementById("q").src = q.src.replace("white", "black");
+            document.getElementById("k").src = k.src.replace("white", "black");
+            document.getElementById("r").src = r.src.replace("white", "black");
+            document.getElementById("b").src = b.src.replace("white", "black");                        
+            $('#myModal').modal('show');
+          }
+          else {
+            window.location.reload();
+          }
+        });
       }
     });
   });
@@ -51,7 +67,7 @@
           <% y = index + 1 %>
           <% location = locate_piece(x, y) %>
           <% if !location.nil? %>
-            <div class='drag'>
+            <div class='drag' data-piece-type=<%= location.type %>>
               <%= link_to render_piece(x, y), piece_path(location) %>
             </div>
           <% end %>
@@ -60,6 +76,7 @@
     </div>
   <% end %>
 </div>
+
 <div class='active_player'>
   <% if @game.black_player %>
     <% black = User.all.find_by(id: @game.black_player)%>
@@ -70,5 +87,42 @@
     <% end %>
   <% end %>
 </div>
-<br>
+<br/>
 <h5 id='castling'>Castling (when legal) is performed by moving your King 2 spaces to the left or right.</h5>
+
+<div class="modal fade" id='myModal' role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Promote Your Pawn</h4>
+      </div>
+      <form action="#">
+        <div class="promo-selection-container">
+          <div class="checkboxgroup">
+            <label for="Queen.png" class="radio-label">
+              <img src="/assets/whiteQueen.png" id="q" class="piece-image">
+              <br />
+              Queen
+            </label>
+            <input class="radio-input" type="radio" name="p_type" value="Queen" checked="checked">
+          </div>
+          <% ['Knight', 'Rook', 'Bishop'].each do |name| %>             
+            <div class="checkboxgroup">
+              <label for="white<%= name %>.png">
+                <img src="/assets/white<%= name %>.png" id="<%= name.chars.first.downcase %>" class="piece-image">
+                <br />
+                <%= name %>
+              </label>
+              <input type="radio" name="p_type" value="<%= name %>" id="<%= name %>">
+            </div>
+          <% end %>
+          <br />
+          <br />
+          <input type="submit" class="btn btn-primary">
+        </div>
+      </form>
+      <br />
+      </div>
+      </div>
+    </div>
+</div>
