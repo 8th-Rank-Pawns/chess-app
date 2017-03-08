@@ -44,6 +44,7 @@ gem 'rails_12factor', group: :production
 gem 'sprockets', '2.11.0'
 
 group :development, :test do
+  gem 'database_cleaner'
   gem 'factory_girl_rails', '~>4.0'
   gem 'pry-rails'
   gem 'rspec-rails', '~> 3.5'
