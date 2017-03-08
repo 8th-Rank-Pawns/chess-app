@@ -32,7 +32,14 @@
     });
   });
 </script>
-
+<div class='active_player'>
+  <% white = User.all.find_by(id: @game.white_player)%>
+  <% if white.name %>
+    <%= white.name %>
+  <% else %>
+    <%= white.email %>
+  <% end %>
+</div>
 <div class="board">
   <% board = Array.new(8) %>
   <% board.map! {Array(1..8)}%>
@@ -51,6 +58,16 @@
         </div>
       <% end %>
     </div>
+  <% end %>
+</div>
+<div class='active_player'>
+  <% if @game.black_player %>
+    <% black = User.all.find_by(id: @game.black_player)%>
+    <% if black.name %>
+      <%= black.name %>
+    <% else %>
+      <%= black.email %>
+    <% end %>
   <% end %>
 </div>
 <br>
