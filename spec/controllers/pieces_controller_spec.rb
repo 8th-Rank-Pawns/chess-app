@@ -50,5 +50,44 @@ RSpec.describe PiecesController, type: :controller do
       white_rook = game.pieces.find_by(horizontal_position: 6, vertical_position: 1)
       expect(white_rook.type).to eq('Rook')
     end
+
+    it 'pawn will have passant true after moving 2 spaces' do
+      white_pawn = FactoryGirl.create(:pawn, horizontal_position: 3, vertical_position: 2, color: 'white', game: game)
+      white_pawn.move_to!(horizontal_position: 3, vertical_position: 4)
+      expect(white_pawn.passant).to eq(true)
+    end
+
+    it 'pawn will not have passant true after moving one space' do
+      white_pawn = FactoryGirl.create(:pawn, horizontal_position: 3, vertical_position: 2, color: 'white', game: game)
+      white_pawn.move_to!(horizontal_position: 3, vertical_position: 3)
+      expect(white_pawn.passant).to eq(false)
+    end
+
+    it 'pawn with passant true can be captured en passant' do
+      FactoryGirl.create(:pawn, horizontal_position: 6, vertical_position: 4, color: 'white', game: game, passant: true)
+      black_pawn = FactoryGirl.create(:pawn, horizontal_position: 5, vertical_position: 4, color: 'black', game: game)
+      black_pawn.move_to!(horizontal_position: 6, vertical_position: 3)
+      expect(black_pawn.horizontal_position).to eq(6)
+      passant_pawn = game.pieces.find_by(horizontal_position: 6, vertical_position: 4)
+      expect(passant_pawn.present?).to eq(false)
+    end
+
+    it 'pawn with passant false cannot be captured en passant' do
+      FactoryGirl.create(:pawn, horizontal_position: 6, vertical_position: 4, color: 'white', game: game, passant: false)
+      black_pawn = FactoryGirl.create(:pawn, horizontal_position: 5, vertical_position: 4, color: 'black', game: game)
+      black_pawn.move_to!(horizontal_position: 6, vertical_position: 3)
+      expect(black_pawn.horizontal_position).to eq(5)
+      passant_pawn = game.pieces.find_by(horizontal_position: 6, vertical_position: 4)
+      expect(passant_pawn.present?).to eq(true)
+    end
+
+    it 'moving another piece sets passant to false' do
+      FactoryGirl.create(:pawn, horizontal_position: 6, vertical_position: 4, color: 'white', game: game, passant: true)
+      black_pawn = FactoryGirl.create(:pawn, horizontal_position: 5, vertical_position: 4, color: 'black', game: game)
+      black_pawn.move_to!(horizontal_position: 5, vertical_position: 3)
+      expect(black_pawn.vertical_position).to eq(3)
+      passant_pawn = game.pieces.find_by(horizontal_position: 6, vertical_position: 4)
+      expect(passant_pawn.passant).to eq(false)
+    end
   end
 end
