@@ -22,6 +22,7 @@ class King < Piece
   def perform_castling(new_x, color)
     define_rooks
     update_attributes(horizontal_position: new_x, castle: false)
+    game.pieces.update_all(passant: false)
     return perform_queenside_castling(color) if new_x == 3
     return perform_kingside_castling(color) if new_x == 7
   end
