@@ -24,18 +24,15 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li>
-          <%= link_to new_game_path do %>
-          <i class="glyphicon glyphicon-plus-sign"></i>
-          <b>New Game</b>
-          <% end %>
-        </li>
-      </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
-          <li id="prof_pic"><%= image_tag "http://graph.facebook.com/#{current_user.uid}/picture?width=33&height=33" %></li>
-          <li id="user_name"><b><%= current_user.name %></b></li>
+            <% if !current_user.name.blank? %>
+            <li class="prof_pic"><%= image_tag "http://graph.facebook.com/#{current_user.uid}/picture?width=33&height=33" %></li>
+            <li id="user_name"><b><%= current_user.name %></b></li>
+            <% else %>
+            <li><%= image_tag("sp.png", size: '33x41', class: 'prof_pic') %></li>
+            <li id="user_name"><b><%= current_user.email %></b></li>
+            <% end %>
           <li><%= link_to 'Sign out', destroy_user_session_path, method: :delete %></li>
         <% else %>
           <li id="special"><%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %></li>
