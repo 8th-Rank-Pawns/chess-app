@@ -12,13 +12,8 @@ class Pawn < Piece
   private
 
   def diagonal_capture?(x_end, y_end)
-    if color == 'white'
-      return true if game.pieces.where(horizontal_position: x_end, vertical_position: y_end, color: 'black').present?
-      game.pieces.where(horizontal_position: x_end, vertical_position: vertical_position, color: 'black', passant: true).present?
-    else
-      return true if game.pieces.where(horizontal_position: x_end, vertical_position: y_end, color: 'white').present?
-      game.pieces.where(horizontal_position: x_end, vertical_position: vertical_position, color: 'white', passant: true).present?
-    end
+    return true if game.pieces.where(horizontal_position: x_end, vertical_position: y_end, color: opposite_color).present?
+    game.pieces.where(horizontal_position: x_end, vertical_position: vertical_position, color: opposite_color, passant: true).present?
   end
 
   def vertical_or_diagonal(x_end, y_end, diff_x, diff_y)

@@ -8,6 +8,10 @@ module PiecesHelper
     end
   end
 
+  def opposite_color
+    color == 'white' ? 'black' : 'white'
+  end
+
   def can_castle?(new_x, new_y, color)
     return true if type == 'King' && new_y == vertical_position && castle_check(new_x, color)
     false

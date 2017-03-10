@@ -8,7 +8,7 @@ class Piece < ActiveRecord::Base
     new_x = params[:horizontal_position].to_i
     new_y = params[:vertical_position].to_i
     @chess_piece = game.pieces.find_by(horizontal_position: new_x, vertical_position: new_y)
-    enemy_pawn = pawn_location(color, new_x, vertical_position)
+    enemy_pawn = game.pieces.find_by(type: 'Pawn', horizontal_position: new_x, vertical_position: vertical_position, color: opposite_color)
     if capture?(new_x, new_y)
       capture!(new_x, new_y)
     elsif double_move?(type, vertical_position, new_x, new_y)
@@ -21,14 +21,6 @@ class Piece < ActiveRecord::Base
       perform_castling(new_x, color)
     else
       false
-    end
-  end
-
-  def pawn_location(color, new_x, vertical_position)
-    if color == 'white'
-      game.pieces.find_by(type: 'Pawn', horizontal_position: new_x, vertical_position: vertical_position, color: 'black')
-    else
-      game.pieces.find_by(type: 'Pawn', horizontal_position: new_x, vertical_position: vertical_position, color: 'white')
     end
   end
 
