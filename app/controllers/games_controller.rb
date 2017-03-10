@@ -13,12 +13,12 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find_by_id(params[:id])
-    if @game.blank?
-      render text: 'Not Found', status: :not_found
-      return
+    return render text: 'Not Found', status: :not_found if @game.blank?
+    if @game.check?('black')
+      flash[:notice] = 'Black King Check!'
+    elsif @game.check?('white')
+      flash[:notice] = 'White King Check'
     end
-    flash[:notice] = 'Black King Check!' if @game.check?('black')
-    flash[:notice] = 'White King Check!' if @game.check?('white')
   end
 
   def update
