@@ -16,7 +16,7 @@ class Pawn < Piece
   end
 
   def vertical_move(x_end, y_end, diff_x, diff_y)
-    !piece_in_front?(x_end, y_end, diff_x, diff_y) && move_one_or_two(diff_x, diff_y)
+    !piece_in_front?(x_end, y_end) && move_one_or_two(diff_x, diff_y)
   end
 
   def diagonal_move(x_end, y_end, diff_x, diff_y)
@@ -28,8 +28,8 @@ class Pawn < Piece
     color == 'black' && game.pieces.where(horizontal_position: x_end, vertical_position: y_end, color: 'white').present?
   end
 
-  def piece_in_front?(x_end, y_end, diff_x, diff_y)
-    diff_y == 1 && diff_x.zero? && game.pieces.where(horizontal_position: x_end, vertical_position: y_end).present?
+  def piece_in_front?(x_end, y_end)
+    game.pieces.where(horizontal_position: x_end, vertical_position: y_end).present?
   end
 
   def move_one_or_two(diff_x, diff_y)
