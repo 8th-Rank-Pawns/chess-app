@@ -14,22 +14,16 @@ class GamesController < ApplicationController
   def show
     @game = Game.find_by_id(params[:id])
     data = params[:p_type]
-
+    return render text: 'Not Found', status: :not_found if @game.blank?
     until data.nil?
       @game.pieces.where(type: 'Pawn', vertical_position: 1).first.try(:update_attributes, type: data)
       @game.pieces.where(type: 'Pawn', vertical_position: 8).first.try(:update_attributes, type: data)
       data = params[:p_type] = nil
-      redirect_to game_path(@game)
+      return redirect_to game_path(@game)
     end
-
-    return render text: 'Not Found', status: :not_found if @game.blank?
     flash[:notice] = nil
-    if @game.check?('black')
-      flash[:notice] = 'Black King Check!'
-    elsif @game.check?('white')
-      flash[:notice] = 'White King Check'
-    end
-
+    flash[:notice] = 'Black King Check!' if @game.check?('black')
+    flash[:notice] = 'White King Check!' if @game.check?('white')
   end
 
   def update

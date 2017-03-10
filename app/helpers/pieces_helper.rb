@@ -1,7 +1,8 @@
 module PiecesHelper
   def capture!(new_x, new_y)
     if color != @chess_piece[:color]
-      @chess_piece.update_attributes(horizontal_position: nil, vertical_position: nil)
+      # @chess_piece.update_attributes(horizontal_position: nil, vertical_position: nil)
+      @chess_piece.destroy
       update_attributes(horizontal_position: new_x, vertical_position: new_y, castle: false)
     else
       false
