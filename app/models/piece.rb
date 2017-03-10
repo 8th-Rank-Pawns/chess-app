@@ -25,7 +25,11 @@ class Piece < ActiveRecord::Base
   end
 
   def pawn_location(color, new_x, vertical_position)
-    game.pieces.find_by(type: 'Pawn', horizontal_position: new_x, vertical_position: vertical_position, color: color)
+    if color == 'white'
+      game.pieces.find_by(type: 'Pawn', horizontal_position: new_x, vertical_position: vertical_position, color: 'black')
+    else
+      game.pieces.find_by(type: 'Pawn', horizontal_position: new_x, vertical_position: vertical_position, color: 'white')
+    end
   end
 
   def update_it!(new_x, new_y)
