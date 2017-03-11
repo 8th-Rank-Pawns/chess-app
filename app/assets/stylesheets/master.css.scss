@@ -29,6 +29,10 @@ a.navbar-brand {
   color: white !important;
 }
 
+a.navbar-brand:hover {
+  color: grey;
+}
+
 .navbar-inverse .navbar-nav > li > a {
   color: white !important;
 }

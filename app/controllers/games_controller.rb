@@ -21,16 +21,12 @@ class GamesController < ApplicationController
       data = params[:p_type] = nil
       return redirect_to game_path(@game)
     end
-    flash[:notice] = nil
-    flash[:notice] = 'Black King Check!' if @game.check?('black')
-    flash[:notice] = 'White King Check!' if @game.check?('white')
+    flash_notices
   end
 
   def update
     @game = Game.find(params[:id])
-    if @game.black_player.nil?
-      @game.update_attributes(black_player: current_user.id)
-    end
+    @game.update_attributes(black_player: current_user.id) if @game.black_player.nil?
     redirect_to game_path(@game)
   end
 
@@ -38,5 +34,13 @@ class GamesController < ApplicationController
 
   def game_params
     params.require(:game).permit(:name)
+  end
+
+  def flash_notices
+    flash[:notice] = nil
+    return flash[:notice] = 'Checkmate. Black Player Wins!' if @game.checkmate!('white')
+    return flash[:notice] = 'Checkmate. White Player Wins!' if @game.checkmate!('black')
+    flash[:notice] = 'Black King Check!' if @game.check?('black')
+    flash[:notice] = 'White King Check!' if @game.check?('white')
   end
 end

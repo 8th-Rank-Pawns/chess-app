@@ -10,15 +10,20 @@
     $('.drop').droppable({
       drop: function(event, ui){
         var desiredUrl = $(ui.draggable.context.innerHTML).attr("href");
+        console.log(ui);
         var x = $(this).data('square-x');
         var y = $(this).data('square-y');
-        console.log(x, y);
         var piece = { piece: {
           horizontal_position: x,
           vertical_position: y
         } };
         var type = $(ui.draggable.context.outerHTML).attr("data-piece-type");
-        console.log(type);
+        var horiz = parseInt($(ui.draggable.context.outerHTML).attr("data-horiz"));
+        var vert = parseInt($(ui.draggable.context.outerHTML).attr("data-vert"));
+        console.log(horiz, x, vert, y);
+        if (x !== horiz || y !== vert) {
+          $(this).find('.drag').hide();
+        }
         $(ui.draggable).detach().css({top: 0, left: 0}).appendTo(this);
         $.ajax({
           type: 'PUT',
@@ -28,7 +33,7 @@
         }).done(function(data){
           if (data.horizontal_position !== x || data.vertical_position !== y) {
             alert("Illegal move. Try again.");
-            window.location.reload();
+            // window.location.reload();
           }
           else if (type == 'Pawn' && (data.vertical_position == 8)) {
             $('#myModal').modal('show');
@@ -37,11 +42,13 @@
             document.getElementById("q").src = q.src.replace("white", "black");
             document.getElementById("k").src = k.src.replace("white", "black");
             document.getElementById("r").src = r.src.replace("white", "black");
-            document.getElementById("b").src = b.src.replace("white", "black");                        
+            document.getElementById("b").src = b.src.replace("white", "black");      
             $('#myModal').modal('show');
           }
+          else if (x === horiz || y === vert) {
+          }
           else {
-            window.location.reload();
+            // window.location.reload();
           }
         });
       }
@@ -67,7 +74,7 @@
           <% y = index + 1 %>
           <% location = locate_piece(x, y) %>
           <% if !location.nil? %>
-            <div class='drag' data-piece-type=<%= location.type %>>
+            <div class='drag' data-piece-type=<%= location.type %> data-horiz=<%= location.horizontal_position %> data-vert=<%= location.vertical_position %>>
               <%= link_to render_piece(x, y), piece_path(location) %>
             </div>
           <% end %>
