@@ -51,6 +51,17 @@ RSpec.describe PiecesController, type: :controller do
       expect(white_rook.type).to eq('Rook')
     end
 
+    it 'can\'t move your king into check' do
+      game.pieces.where(type: %w(Queen Bishop Knight)).delete_all
+      game.pieces.find_by(horizontal_position: 7, vertical_position: 7).destroy
+      game.pieces.find_by(horizontal_position: 7, vertical_position: 2).destroy
+      joe = FactoryGirl.create(:rook, horizontal_position: 7, vertical_position: 4, color: 'black', game: game)
+      white_king.move_to!(horizontal_position: 7, vertical_position: 1)
+      expect(white_king.horizontal_position).to eq(5)
+      white_rook = game.pieces.find_by(horizontal_position: 6, vertical_position: 1)
+      expect(white_rook.type).to eq(nil)
+    end
+
     it 'pawn will have passant true after moving 2 spaces' do
       white_pawn = FactoryGirl.create(:pawn, horizontal_position: 3, vertical_position: 2, color: 'white', game: game)
       white_pawn.move_to!(horizontal_position: 3, vertical_position: 4)

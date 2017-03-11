@@ -7,7 +7,6 @@ class King < Piece
 
   def castle_check(new_x, color)
     define_rooks
-    # Need "prevent yourself from moving into check" method to cover the remaining restrictions
     return true if new_x == 3 && which_side_castle_check(color, 'queen')
     return true if new_x == 7 && which_side_castle_check(color, 'king')
     false
@@ -15,7 +14,7 @@ class King < Piece
 
   def which_side_castle_check(color, side)
     rook = instance_variable_get("@#{color}_#{side}_rook")
-    return true if castle && !rook.nil? && rook.castle && !obstructed?(rook.horizontal_position, rook.vertical_position) && game.check?(color) == false
+    return true if castle && !rook.nil? && rook.castle && !obstructed?(rook.horizontal_position, rook.vertical_position) && !game.check?(color)
     false
   end
 

@@ -27,8 +27,8 @@ class Piece < ActiveRecord::Base
   end
 
   def move_into_check?(new_x, new_y, horizontal_position, vertical_position)
-    update_it!(new_x, new_y)
-    update = -> { update_it!(horizontal_position, vertical_position) }
+    update_attributes(horizontal_position: new_x, vertical_position: new_y)
+    update = -> { update_attributes(horizontal_position: horizontal_position, vertical_position: vertical_position) }
     if game.check?(color)
       update.call
       return true
