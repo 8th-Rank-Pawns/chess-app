@@ -33,6 +33,32 @@ RSpec.describe King, type: :model do
     end
   end
 
+  describe '.move_into_check?' do
+    game = FactoryGirl.create(:game)
+    black_king = FactoryGirl.create(:king, horizontal_position: 5, vertical_position: 8, color: 'black', game: game)
+
+    it 'move_into_check is false when king doesn\'t move into check' do
+      expect(black_king.move_into_check?(5, 7, black_king.horizontal_position, black_king.vertical_position)).to eq false
+    end
+
+    it 'move_into_check is true when king moves into check' do
+      FactoryGirl.create(:bishop, horizontal_position: 8, vertical_position: 4, color: 'white', game: game)
+      expect(black_king.move_into_check?(5, 7, black_king.horizontal_position, black_king.vertical_position)).to eq true
+    end
+
+    it 'move_into_check is false if piece is blocking attacker' do
+      FactoryGirl.create(:bishop, horizontal_position: 8, vertical_position: 4, color: 'white', game: game)
+      FactoryGirl.create(:pawn, horizontal_position: 7, vertical_position: 5, color: 'white', game: game)
+      expect(black_king.move_into_check?(5, 7, black_king.horizontal_position, black_king.vertical_position)).to eq false
+    end
+
+    it 'move_into_check doesn\'t allow pieces blocking king from attacker to be moved so that king becomes checked' do
+      FactoryGirl.create(:bishop, horizontal_position: 8, vertical_position: 5, color: 'white', game: game)
+      pawn = FactoryGirl.create(:pawn, horizontal_position: 7, vertical_position: 6, color: 'black', game: game)
+      expect(pawn.move_into_check?(7, 5, pawn.horizontal_position, pawn.vertical_position)).to eq true
+    end
+  end
+
   describe '.can_castle?' do
     context 'returns true when castling is legal' do
       game = FactoryGirl.create(:game)
