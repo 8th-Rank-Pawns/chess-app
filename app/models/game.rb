@@ -22,18 +22,36 @@ class Game < ActiveRecord::Base
     end
   end
 
-  def check?(color)
-    king = King.find_by(game: self, color: color)
-    attackers = []
-    Piece.where(game: self).where.not(color: color).each do |piece|
-      attackers << piece if piece.valid_move?(king.horizontal_position, king.vertical_position)
-    end
-    return true if !attackers.empty?
-    false
+  def checkmate!(color)
+    return true if check?(color) == 'in check & cant move' && king_cant_move(color)
   end
 
-  def checkmate!(color)
-    return true if check?(color) && king_cant_move(color)
+  def check?(color)
+    @king = King.find_by(game: self, color: color)
+    @attackers = []
+    Piece.where(game: self).where.not(color: color).each do |piece|
+      @attackers << piece if piece.valid_move?(@king.horizontal_position, @king.vertical_position)
+    end
+    return false if @attackers.empty?
+    can_attackers_be_killed_or_their_path_to_your_king_be_obstructed?
+  end
+
+  def can_attackers_be_killed_or_their_path_to_your_king_be_obstructed?
+    defenders = []
+    @attackers.each do |attacker|
+      protect_king = lambda do
+        Piece.where(game: self).where.not(color: attacker.color, type: 'King').each do |piece|
+          return defenders << piece if piece.valid_move?(attacker.horizontal_position, attacker.vertical_position)
+          attacker.obstructed?(@king.horizontal_position, @king.vertical_position)
+          $path_to_king.each do |square|
+            return defenders << piece if piece.valid_move?(square.first, square.last)
+          end
+        end
+      end
+      protect_king.call
+    end
+    return 'in check & cant move' if defenders.count < @attackers.count
+    true
   end
 
   def king_cant_move(color)
@@ -42,11 +60,9 @@ class Game < ActiveRecord::Base
     y = king.vertical_position
     ((x - 1)..(x + 1)).each do |x_pos|
       ((y - 1)..(y + 1)).each do |y_pos|
-        out_of_bounds = -> { x_pos != 0 && x_pos != 9 && y_pos != 0 && y_pos != 9 }
-        return false if out_of_bounds.call && !king.move_into_check?(x_pos, y_pos, x, y)
+        in_bounds = -> { x_pos != 0 && x_pos != 9 && y_pos != 0 && y_pos != 9 }
+        return false if in_bounds.call && !king.move_into_check?(x_pos, y_pos, x, y) && king.valid_move?(x_pos, y_pos)
       end
     end
   end
-
-  def cant_kill_attacker(color); end
 end

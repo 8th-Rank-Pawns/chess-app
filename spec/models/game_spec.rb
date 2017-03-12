@@ -6,7 +6,7 @@ RSpec.describe Game, type: :model do
       game = FactoryGirl.create(:game)
       FactoryGirl.create(:king, horizontal_position: 5, vertical_position: 5, color: 'white', game: game)
       FactoryGirl.create(:bishop, horizontal_position: 3, vertical_position: 3, color: 'black', game: game)
-      expect(game.check?('white')).to eq true
+      expect(game.check?('white')).not_to eq false
     end
 
     it 'returns false when game is not in check' do
