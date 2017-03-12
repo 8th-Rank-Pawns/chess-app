@@ -55,6 +55,11 @@ RSpec.describe GamesController, type: :controller do
       promoted = game.pieces.where(horizontal_position: 4, vertical_position: 1).first.type
       expect(promoted).to eq('Queen')
     end
+
+    # will finish this up in next commit
+    context 'display player color is in checkmate if and only if game is in checkmate' do
+      game = FactoryGirl.create(:game)
+    end
   end
 
   describe 'games#update action' do
