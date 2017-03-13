@@ -23,7 +23,7 @@ class Game < ActiveRecord::Base
   end
 
   def checkmate!(color)
-    return true if check?(color) == 'in check & no blockers' && king_cant_move(color)
+    return true if check?(color) == 'in check & no blockers'# && king_cant_move(color)
   end
 
   def check?(color)
@@ -61,7 +61,7 @@ class Game < ActiveRecord::Base
     ((x - 1)..(x + 1)).each do |x_pos|
       ((y - 1)..(y + 1)).each do |y_pos|
         in_bounds = -> { x_pos != 0 && x_pos != 9 && y_pos != 0 && y_pos != 9 }
-        return false if in_bounds.call && !king.move_into_check?(x_pos, y_pos, x, y) && king.valid_move?(x_pos, y_pos)
+        return false if in_bounds.call && king.move_into_check?(x_pos, y_pos, x, y) && king.valid_move?(x_pos, y_pos)
       end
     end
   end
