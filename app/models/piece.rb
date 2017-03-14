@@ -46,6 +46,15 @@ class Piece < ActiveRecord::Base
     @chess_piece && valid_move?(new_x, new_y)
   end
 
+  def capture!(new_x, new_y)
+    if color != @chess_piece[:color]
+      @chess_piece.destroy
+      update_it!(new_x, new_y)
+    else
+      false
+    end
+  end
+
   def double_move?(type, vertical_position, new_x, new_y)
     valid_move?(new_x, new_y) && type == 'Pawn' && ((vertical_position == 2 && new_y == 4) || (vertical_position == 7 && new_y == 5))
   end

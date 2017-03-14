@@ -23,7 +23,8 @@ class Game < ActiveRecord::Base
   end
 
   def checkmate!(color)
-    return true if check?(color) == 'in check & no blockers' && king_cant_move(color)
+    return true if (check?(color) == 'in check & no blockers') && king_cant_move(color)
+    false
   end
 
   def check?(color)

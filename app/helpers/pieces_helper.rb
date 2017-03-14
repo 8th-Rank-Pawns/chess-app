@@ -1,13 +1,4 @@
 module PiecesHelper
-  def capture!(new_x, new_y)
-    if color != @chess_piece[:color]
-      @chess_piece.destroy
-      update_it!(new_x, new_y)
-    else
-      false
-    end
-  end
-
   def opposite_color
     color == 'white' ? 'black' : 'white'
   end
