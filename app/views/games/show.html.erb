@@ -83,7 +83,12 @@
     </div>
   <% end %>
 </div>
-
+<% if notice.present? %>
+  <p class="alert alert-info"><%= notice %></p>
+<% end %>
+<% if alert.present? %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
 <div class='active_player'>
   <% if @game.black_player %>
     <% black = User.all.find_by(id: @game.black_player)%>

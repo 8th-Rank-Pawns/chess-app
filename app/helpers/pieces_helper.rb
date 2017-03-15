@@ -1,4 +1,7 @@
 module PiecesHelper
+
+  include Way
+
   def opposite_color
     color == 'white' ? 'black' : 'white'
   end
@@ -45,15 +48,15 @@ module PiecesHelper
   private
 
   def horizontal_check
-    $path_to_king = []
+    Way.to_king = []
     if @x_end < @x_start
       (@x_end + 1..@x_start - 1).each do |x_between|
-        $path_to_king << [x_between, @y_start]
+        Way.to_king << [x_between, @y_start]
         return true if game.pieces.where(horizontal_position: x_between, vertical_position: @y_start).present?
       end
     else
       (@x_start + 1..@x_end - 1).each do |x_between|
-        $path_to_king << [x_between, @y_start]
+        Way.to_king << [x_between, @y_start]
         return true if game.pieces.where(horizontal_position: x_between, vertical_position: @y_start).present?
       end
     end
@@ -61,15 +64,15 @@ module PiecesHelper
   end
 
   def vertical_check
-    $path_to_king = []
+    Way.to_king = []
     if @y_end < @y_start
       (@y_end + 1..@y_start - 1).each do |y_between|
-        $path_to_king << [@x_start, y_between]
+        Way.to_king << [@x_start, y_between]
         return true if game.pieces.where(horizontal_position: @x_start, vertical_position: y_between).present?
       end
     else
       (@y_start + 1..@y_end - 1).each do |y_between|
-        $path_to_king << [@x_start, y_between]
+        Way.to_king << [@x_start, y_between]
         return true if game.pieces.where(horizontal_position: @x_start, vertical_position: y_between).present?
       end
     end
@@ -77,17 +80,21 @@ module PiecesHelper
   end
 
   def diagonal_check
-    $path_to_king = []
+    Way.to_king = []
     find_x_right_and_x_left
-    count = 1
-    while count < @x_right - @x_left
-      $path_to_king << [@x_left + count, @y_bottom + count] if diagonal_direction
-      $path_to_king << [@x_left + count, @y_top - count] unless diagonal_direction
-      return true if diagonal_direction && game.pieces.where(horizontal_position: @x_left + count, vertical_position: @y_bottom + count).present?
-      return true if !diagonal_direction && game.pieces.where(horizontal_position: @x_left + count, vertical_position: @y_top - count).present?
-      count += 1
+    @count = 1
+    while @count < @x_right - @x_left
+      Way.to_king << [@x_left + @count, @y_bottom + @count] if diagonal_direction
+      Way.to_king << [@x_left + @count, @y_top - @count] unless diagonal_direction
+      return true if diagonal_obstruction?
+      @count += 1
     end
     false
+  end
+
+  def diagonal_obstruction?
+    return true if diagonal_direction && game.pieces.where(horizontal_position: @x_left + @count, vertical_position: @y_bottom + @count).present?
+    !diagonal_direction && game.pieces.where(horizontal_position: @x_left + @count, vertical_position: @y_top - @count).present?
   end
 
   def find_x_right_and_x_left

@@ -3,6 +3,8 @@ class Game < ActiveRecord::Base
   has_many :users
   has_many :pieces
 
+  include Way
+
   def populate_board!
     [[1, 'white'], [8, 'black']].each do |x|
       King.create(horizontal_position: 5, vertical_position: x[0], color: x[1], game_id: id, castle: true)
@@ -44,7 +46,7 @@ class Game < ActiveRecord::Base
         Piece.where(game: self).where.not(color: attacker.color, type: 'King').each do |piece|
           return defenders << piece if piece.valid_move?(attacker.horizontal_position, attacker.vertical_position)
           attacker.obstructed?(@king.horizontal_position, @king.vertical_position)
-          $path_to_king.each do |square|
+          Way.to_king.each do |square|
             return defenders << piece if piece.valid_move?(square.first, square.last)
           end
         end
@@ -61,9 +63,12 @@ class Game < ActiveRecord::Base
     y = king.vertical_position
     ((x - 1)..(x + 1)).each do |x_pos|
       ((y - 1)..(y + 1)).each do |y_pos|
-        in_bounds = -> { x_pos != 0 && x_pos != 9 && y_pos != 0 && y_pos != 9 }
-        return false if in_bounds.call && !king.move_into_check?(x_pos, y_pos, x, y) && king.valid_move?(x_pos, y_pos)
+        return false if in_bounds(x_pos, y_pos) && !king.move_into_check?(x_pos, y_pos, x, y) && king.valid_move?(x_pos, y_pos)
       end
     end
+  end
+
+  def in_bounds(x_pos, y_pos)
+    x_pos != 0 && x_pos != 9 && y_pos != 0 && y_pos != 9
   end
 end
