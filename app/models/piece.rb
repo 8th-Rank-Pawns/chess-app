@@ -9,7 +9,9 @@ class Piece < ActiveRecord::Base
     new_y = params[:vertical_position].to_i
     @chess_piece = game.pieces.find_by(horizontal_position: new_x, vertical_position: new_y)
     enemy_pawn = game.pieces.find_by(type: 'Pawn', horizontal_position: new_x, vertical_position: vertical_position, color: opposite_color)
-    if capture?(new_x, new_y)
+    if move_into_check?(new_x, new_y, horizontal_position, vertical_position)
+      false
+    elsif capture?(new_x, new_y)
       capture!(new_x, new_y)
     elsif double_move?(type, vertical_position, new_x, new_y)
       update_it!(new_x, new_y)
@@ -24,6 +26,17 @@ class Piece < ActiveRecord::Base
     end
   end
 
+  def move_into_check?(new_x, new_y, horizontal_position, vertical_position)
+    update_attributes(horizontal_position: new_x, vertical_position: new_y)
+    update = -> { update_attributes(horizontal_position: horizontal_position, vertical_position: vertical_position) }
+    if game.check?(color)
+      update.call
+      return true
+    end
+    update.call
+    false
+  end
+
   def update_it!(new_x, new_y)
     update_attributes(horizontal_position: new_x, vertical_position: new_y, castle: false)
     game.pieces.update_all(passant: false)
@@ -31,6 +44,15 @@ class Piece < ActiveRecord::Base
 
   def capture?(new_x, new_y)
     @chess_piece && valid_move?(new_x, new_y)
+  end
+
+  def capture!(new_x, new_y)
+    if color != @chess_piece[:color]
+      @chess_piece.destroy
+      update_it!(new_x, new_y)
+    else
+      false
+    end
   end
 
   def double_move?(type, vertical_position, new_x, new_y)

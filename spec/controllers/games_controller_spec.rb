@@ -55,6 +55,67 @@ RSpec.describe GamesController, type: :controller do
       promoted = game.pieces.where(horizontal_position: 4, vertical_position: 1).first.type
       expect(promoted).to eq('Queen')
     end
+
+    context 'checkmate happens when king is in check and cannot move or be protected' do
+      game = FactoryGirl.create(:game)
+      game.populate_board!
+      black_pawn7 = game.pieces.find_by(horizontal_position: 7, vertical_position: 7)
+      black_pawn6 = game.pieces.find_by(horizontal_position: 6, vertical_position: 7)
+      black_pawn4 = game.pieces.find_by(horizontal_position: 4, vertical_position: 7)
+      white_pawn5 = game.pieces.find_by(horizontal_position: 5, vertical_position: 2)
+      white_queen = game.pieces.find_by(type: 'Queen', color: 'white')
+      black_knight1 = game.pieces.find_by(horizontal_position: 2, vertical_position: 8)
+      black_knight2 = game.pieces.find_by(horizontal_position: 7, vertical_position: 8)
+      black_pawn8 = game.pieces.find_by(horizontal_position: 8, vertical_position: 7)
+      black_rook2 = game.pieces.find_by(horizontal_position: 8, vertical_position: 8)
+      black_pawn5 = game.pieces.find_by(horizontal_position: 5, vertical_position: 7)
+      white_pawn5.move_to!(horizontal_position: 5, vertical_position: 4)
+      black_pawn7.move_to!(horizontal_position: 7, vertical_position: 5)
+      black_pawn6.move_to!(horizontal_position: 6, vertical_position: 5)
+      white_queen.move_to!(horizontal_position: 8, vertical_position: 5)
+
+      it 'performs fast checkmate aka fool\'s checkmate' do
+        expect(game.checkmate!('black')).to eq(true)
+        # Would have like to test the flash messages, but the tests I wrote didn't pass.
+        # However, flash message seems to pop up properly and checkmate logic seems to be working correctly.
+      end
+
+      it '(1)not checkmate if opening (2)checkmate again if opening becomes occupied' do
+        white_queen.move_to!(horizontal_position: 8, vertical_position: 4)
+        black_pawn4.move_to!(horizontal_position: 4, vertical_position: 5)
+        white_queen.move_to!(horizontal_position: 8, vertical_position: 5)
+        expect(game.checkmate!('black')).to eq(false)
+        white_queen.move_to!(horizontal_position: 8, vertical_position: 4)
+        black_knight1.move_to!(horizontal_position: 4, vertical_position: 7)
+        white_queen.move_to!(horizontal_position: 8, vertical_position: 5)
+        expect(game.checkmate!('black')).to eq(true)
+      end
+
+      it 'not checkmate if attacking piece can be captured' do
+        white_queen.move_to!(horizontal_position: 8, vertical_position: 4)
+        black_knight2.move_to!(horizontal_position: 6, vertical_position: 6)
+        white_queen.move_to!(horizontal_position: 8, vertical_position: 5)
+        expect(game.checkmate!('black')).to eq(false)
+      end
+
+      it 'not checkmate if path from attacking piece to king can be blocked' do
+        white_queen.move_to!(horizontal_position: 8, vertical_position: 4)
+        black_pawn8.move_to!(horizontal_position: 8, vertical_position: 6)
+        black_rook2.move_to!(horizontal_position: 8, vertical_position: 7)
+        white_queen.move_to!(horizontal_position: 8, vertical_position: 5)
+        expect(game.checkmate!('black')).to eq(false)
+      end
+
+      it 'checkmate if king is blocked in and attacking knight can\'t be captured' do
+        white_queen.move_to!(horizontal_position: 8, vertical_position: 4)
+        black_pawn5.move_to!(horizontal_position: 5, vertical_position: 5)
+        black_knight2.move_to!(horizontal_position: 8, vertical_position: 6)
+        FactoryGirl.create(:pawn, horizontal_position: 6, vertical_position: 7, color: 'black', game: game)
+        FactoryGirl.create(:knight, horizontal_position: 5, vertical_position: 7, color: 'black', game: game)
+        FactoryGirl.create(:knight, horizontal_position: 6, vertical_position: 6, color: 'white', game: game)
+        expect(game.checkmate!('black')).to eq(true)
+      end
+    end
   end
 
   describe 'games#update action' do

@@ -8,4 +8,8 @@ module GamesHelper
   def locate_piece(x, y)
     @game.pieces.where(horizontal_position: x, vertical_position: y).first
   end
+
+  # def path_to_king
+  #   return []
+  # end
 end

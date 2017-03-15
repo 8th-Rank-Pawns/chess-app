@@ -59,3 +59,6 @@ Style/GuardClause:
 # Cop supports --auto-correct.
 Style/NumericLiterals:
   MinDigits: 15
+
+EndOfLine:
+  Enabled: false
