@@ -45,11 +45,10 @@ class Game < ActiveRecord::Base
       protect_king = lambda do
         Piece.where(game: self).where.not(color: attacker.color, type: 'King').each do |piece|
           return defenders << piece if piece.valid_move?(attacker.horizontal_position, attacker.vertical_position)
-          if attacker.type != 'Knight'
-            attacker.obstructed?(@king.horizontal_position, @king.vertical_position)
-            Way.to_king.each do |square|
-              return defenders << piece if piece.valid_move?(square.first, square.last)
-            end
+          next if attacker.type == 'Knight'
+          attacker.obstructed?(@king.horizontal_position, @king.vertical_position)
+          Way.to_king.each do |square|
+            return defenders << piece if piece.valid_move?(square.first, square.last)
           end
         end
       end

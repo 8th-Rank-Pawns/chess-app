@@ -89,6 +89,7 @@ RSpec.describe GamesController, type: :controller do
         black_knight1.move_to!(horizontal_position: 4, vertical_position: 7)
         white_queen.move_to!(horizontal_position: 8, vertical_position: 5)
         expect(game.checkmate!('black')).to eq(true)
+        expect(flash[:notice]).to eq('Checkmate. White Player Wins!')
       end
 
       it 'not checkmate if attacking piece can be captured' do
@@ -96,6 +97,7 @@ RSpec.describe GamesController, type: :controller do
         black_knight2.move_to!(horizontal_position: 6, vertical_position: 6)
         white_queen.move_to!(horizontal_position: 8, vertical_position: 5)
         expect(game.checkmate!('black')).to eq(false)
+        expect(flash[:notice]).to eq('Black King Check!')
       end
 
       it 'not checkmate if path from attacking piece to king can be blocked' do
@@ -104,6 +106,7 @@ RSpec.describe GamesController, type: :controller do
         black_rook2.move_to!(horizontal_position: 8, vertical_position: 7)
         white_queen.move_to!(horizontal_position: 8, vertical_position: 5)
         expect(game.checkmate!('black')).to eq(false)
+        expect(flash[:notice]).to eq('Black King Check!')
       end
 
       it 'checkmate if king is blocked in and attacking knight can\'t be captured' do
@@ -114,6 +117,7 @@ RSpec.describe GamesController, type: :controller do
         FactoryGirl.create(:knight, horizontal_position: 5, vertical_position: 7, color: 'black', game: game)
         FactoryGirl.create(:knight, horizontal_position: 6, vertical_position: 6, color: 'white', game: game)
         expect(game.checkmate!('black')).to eq(true)
+        expect(flash[:notice]).to eq('Checkmate. White Player Wins!')
       end
     end
   end

@@ -1,5 +1,4 @@
 module PiecesHelper
-
   include Way
 
   def opposite_color
