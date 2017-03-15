@@ -23,7 +23,7 @@ class Game < ActiveRecord::Base
   end
 
   def checkmate!(color)
-    return true if (check?(color) == 'in check & no blockers') && king_cant_move(color)
+    return true if check?(color) == 'in check & no blockers' && king_cant_move(color)
     false
   end
 
@@ -43,9 +43,11 @@ class Game < ActiveRecord::Base
       protect_king = lambda do
         Piece.where(game: self).where.not(color: attacker.color, type: 'King').each do |piece|
           return defenders << piece if piece.valid_move?(attacker.horizontal_position, attacker.vertical_position)
-          attacker.obstructed?(@king.horizontal_position, @king.vertical_position)
-          $path_to_king.each do |square|
-            return defenders << piece if piece.valid_move?(square.first, square.last)
+          if attacker.type != 'Knight'
+            attacker.obstructed?(@king.horizontal_position, @king.vertical_position)
+            $path_to_king.each do |square|
+              return defenders << piece if piece.valid_move?(square.first, square.last)
+            end
           end
         end
       end
@@ -61,9 +63,12 @@ class Game < ActiveRecord::Base
     y = king.vertical_position
     ((x - 1)..(x + 1)).each do |x_pos|
       ((y - 1)..(y + 1)).each do |y_pos|
-        in_bounds = -> { x_pos != 0 && x_pos != 9 && y_pos != 0 && y_pos != 9 }
-        return false if in_bounds.call && !king.move_into_check?(x_pos, y_pos, x, y) && king.valid_move?(x_pos, y_pos)
+        return false if in_bounds(x_pos, y_pos) && !king.move_into_check?(x_pos, y_pos, x, y) && king.valid_move?(x_pos, y_pos)
       end
     end
+  end
+
+  def in_bounds(x_pos, y_pos)
+    x_pos != 0 && x_pos != 9 && y_pos != 0 && y_pos != 9
   end
 end

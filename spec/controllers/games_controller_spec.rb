@@ -68,6 +68,7 @@ RSpec.describe GamesController, type: :controller do
       black_knight2 = game.pieces.find_by(horizontal_position: 7, vertical_position: 8)
       black_pawn8 = game.pieces.find_by(horizontal_position: 8, vertical_position: 7)
       black_rook2 = game.pieces.find_by(horizontal_position: 8, vertical_position: 8)
+      black_pawn5 = game.pieces.find_by(horizontal_position: 5, vertical_position: 7)
       white_pawn5.move_to!(horizontal_position: 5, vertical_position: 4)
       black_pawn7.move_to!(horizontal_position: 7, vertical_position: 5)
       black_pawn6.move_to!(horizontal_position: 6, vertical_position: 5)
@@ -103,6 +104,16 @@ RSpec.describe GamesController, type: :controller do
         black_rook2.move_to!(horizontal_position: 8, vertical_position: 7)
         white_queen.move_to!(horizontal_position: 8, vertical_position: 5)
         expect(game.checkmate!('black')).to eq(false)
+      end
+
+      it 'checkmate if king is blocked in and attacking knight can\'t be captured' do
+        white_queen.move_to!(horizontal_position: 8, vertical_position: 4)
+        black_pawn5.move_to!(horizontal_position: 5, vertical_position: 5)
+        black_knight2.move_to!(horizontal_position: 8, vertical_position: 6)
+        FactoryGirl.create(:pawn, horizontal_position: 6, vertical_position: 7, color: 'black', game: game)
+        FactoryGirl.create(:knight, horizontal_position: 5, vertical_position: 7, color: 'black', game: game)
+        FactoryGirl.create(:knight, horizontal_position: 6, vertical_position: 6, color: 'white', game: game)
+        expect(game.checkmate!('black')).to eq(true)
       end
     end
   end

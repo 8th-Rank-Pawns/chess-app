@@ -55,6 +55,14 @@
     });
   });
 </script>
+<!-- Flash Messages -->
+<% if notice.present? %>
+  <p class="alert alert-info"><%= notice %></p>
+<% end %>
+<% if alert.present? %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+
 <div class='active_player'>
   <% white = User.all.find_by(id: @game.white_player)%>
   <% if white.name %>
