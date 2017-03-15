@@ -3,6 +3,8 @@ class Game < ActiveRecord::Base
   has_many :users
   has_many :pieces
 
+  include Way
+
   def populate_board!
     [[1, 'white'], [8, 'black']].each do |x|
       King.create(horizontal_position: 5, vertical_position: x[0], color: x[1], game_id: id, castle: true)
@@ -45,7 +47,7 @@ class Game < ActiveRecord::Base
           return defenders << piece if piece.valid_move?(attacker.horizontal_position, attacker.vertical_position)
           if attacker.type != 'Knight'
             attacker.obstructed?(@king.horizontal_position, @king.vertical_position)
-            $path_to_king.each do |square|
+            Way.to_king.each do |square|
               return defenders << piece if piece.valid_move?(square.first, square.last)
             end
           end
