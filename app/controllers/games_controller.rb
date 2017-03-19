@@ -42,5 +42,7 @@ class GamesController < ApplicationController
     return flash[:notice] = 'Checkmate. White Player Wins!' if @game.checkmate!('black')
     flash[:notice] = 'Black King Check!' if @game.check?('black')
     flash[:notice] = 'White King Check!' if @game.check?('white')
+    flash[:notice] = 'Black Stalemate!' if @game.stalemate?('black')
+    flash[:notice] = 'White Stalemate!' if @game.stalemate?('white')
   end
 end
