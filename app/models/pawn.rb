@@ -4,7 +4,7 @@ class Pawn < Piece
     diff_y = y_end - vertical_position if color == 'white'
     diff_y = vertical_position - y_end if color == 'black'
 
-    return false if obstructed?(x_end, y_end) || did_not_move?(x_end, y_end)
+    return false if same_color?(x_end, y_end) || obstructed?(x_end, y_end) || did_not_move?(x_end, y_end)
     return true if vertical_or_diagonal(x_end, y_end, diff_x, diff_y)
     false
   end

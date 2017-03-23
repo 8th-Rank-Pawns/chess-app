@@ -26,6 +26,11 @@ class Piece < ActiveRecord::Base
     end
   end
 
+  def same_color?(x_end, y_end)
+    chess_piece = game.pieces.find_by(horizontal_position: x_end, vertical_position: y_end)
+    return true if !chess_piece.nil? && chess_piece.color == color
+  end
+
   def move_into_check?(new_x, new_y, horizontal_position, vertical_position)
     update_attributes(horizontal_position: new_x, vertical_position: new_y)
     update = -> { update_attributes(horizontal_position: horizontal_position, vertical_position: vertical_position) }
