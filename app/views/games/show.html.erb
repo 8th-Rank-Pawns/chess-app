@@ -42,7 +42,7 @@
             document.getElementById("q").src = q.src.replace("white", "black");
             document.getElementById("k").src = k.src.replace("white", "black");
             document.getElementById("r").src = r.src.replace("white", "black");
-            document.getElementById("b").src = b.src.replace("white", "black");      
+            document.getElementById("b").src = b.src.replace("white", "black");
             $('#myModal').modal('show');
           }
           else if (x === horiz && y === vert) {
@@ -55,7 +55,6 @@
     });
   });
 </script>
-
 <div class='active_player'>
   <% white = User.all.find_by(id: @game.white_player)%>
   <% if white.name %>
@@ -63,6 +62,7 @@
   <% else %>
     <%= white.email %>
   <% end %>
+  <%= link_to 'concede', game_path(@game, {concede: true}.merge(params)), data: {confirm: "Are you sure you want to forfeit?" }, method: :put, class: 'btn btn-xs btn-default concede' %>
 </div>
 <div class="board">
   <% board = Array.new(8) %>
@@ -75,7 +75,7 @@
           <% y = index + 1 %>
           <% location = locate_piece(x, y) %>
           <% if !location.nil? %>
-            <div class='drag' data-piece-type=<%= location.type %> data-horiz=<%= location.horizontal_position %> data-vert=<%= location.vertical_position %>>
+            <div class='<%= colors_turn(location.color) %>' data-piece-type=<%= location.type %> data-horiz=<%= location.horizontal_position %> data-vert=<%= location.vertical_position %>>
               <%= link_to render_piece(x, y), piece_path(location) %>
             </div>
           <% end %>
@@ -113,7 +113,7 @@
             </label>
             <input class="radio-input" type="radio" name="p_type" value="Queen" checked="checked">
           </div>
-          <% ['Knight', 'Rook', 'Bishop'].each do |name| %>             
+          <% ['Knight', 'Rook', 'Bishop'].each do |name| %>
             <div class="checkboxgroup">
               <label for="white<%= name %>.png">
                 <img src="/assets/white<%= name %>.png" id="<%= name.chars.first.downcase %>" class="piece-image">

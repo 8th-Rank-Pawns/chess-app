@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   root 'chess#index'
   resources :games, only: [:new, :create, :show, :update]
+  # put 'games:controller/:id/#game_over'
   resources :pieces, only: [:show, :update]
 
   # The priority is based upon order of creation: first created -> highest priority.
