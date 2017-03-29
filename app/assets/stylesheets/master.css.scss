@@ -23,14 +23,26 @@ body {
   background:url('/assets/wild_oliva.png');
   border-radius: 0;
   box-shadow: 0px 1px 3px #2a2a2a;
+  max-height: 55px;
 }
 
-a.navbar-brand {
-  color: white !important;
+.logo {
+  width: 40px;
+  margin: 4px;
+  background-color: none;
 }
 
-a.navbar-brand:hover {
+.brand {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  color: white;
+  text-decoration: none;
+  line-height: 2.6em;
+}
+
+.brand:hover {
   color: grey;
+  text-decoration: none;
 }
 
 .navbar-inverse .navbar-nav > li > a {
