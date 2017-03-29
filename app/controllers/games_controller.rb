@@ -25,11 +25,10 @@ class GamesController < ApplicationController
   end
 
   def update
-    binding.pry
     @game = Game.find(params[:id])
-    if @game.black_player.nil?
+    if @game.black_player.nil? && params[:concede].blank?
       @game.update_attributes(black_player: current_user.id)
-      redirect_to game_path(@game)
+      return redirect_to game_path(@game)
     end
     if params[:concede] == 'true'
       @game.update_attributes(finished: true)

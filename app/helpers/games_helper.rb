@@ -10,7 +10,7 @@ module GamesHelper
   end
 
   def colors_turn(color)
-    return 'drag' if @game.turn == true && color == 'white'
-    return 'drag' if @game.turn == false && color == 'black'
+    return 'drag' if @game.turn == true && color == 'white' && !@game.finished
+    return 'drag' if !@game.turn && color == 'black' && !@game.finished
   end
 end
