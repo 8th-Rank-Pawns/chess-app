@@ -49,10 +49,12 @@ class GamesController < ApplicationController
     flash[:notice] = 'Black Player\'s turn' if @game.turn == false
     if @game.checkmate!('white')
       flash[:notice] = nil
+      @game.update_attributes(finished: true)
       return flash[:alert] = 'Checkmate. Black Player Wins!'
     end
     if @game.checkmate!('black')
       flash[:notice] = nil
+      @game.update_attributes(finished: true)
       return flash[:alert] = 'Checkmate. White Player Wins!'
     end
     flash[:alert] = 'Black King Check!' if @game.check?('black')

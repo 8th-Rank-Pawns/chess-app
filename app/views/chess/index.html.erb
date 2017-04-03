@@ -4,60 +4,63 @@
     <b>Start a new game</b>
   <% end %>
   <br>
-  <!-- My games -->
-  <div class="col-sm-6 text-center col-sm-offset-1">
-    <h2><strong>My Games</strong></h2>
-    <% @my_games.each do |game| %>
-      <div class="game-card">
-        <h4 id='game_name'><%= "#{game.name}" %></h4>
-        <p id='white'>
-          <% player = User.all.find_by(id: game.white_player)%>
-          <%= 'White player: ' if game.black_player.nil? %>
-          <% if !player.name.blank? %>
-            <%= player.name %>
-          <% elsif !player.email.blank? %>
-            <%= player.email %>
-          <% end %>
-          <% if !game.black_player.nil? %>
-          <% player2 = User.all.find_by(id: game.black_player)%>
-            <%= ' vs ' %>
-            <% if !player2.name.blank? %>
-              <%= player2.name %>
-            <% elsif !player2.email.blank? %>
-              <%= player2.email %>
+
+  <% if current_user %>
+    <!-- My games -->
+    <div class="col-sm-6 text-center col-sm-offset-1">
+      <h2><strong>My Games</strong></h2>
+      <% @my_games.each do |game| %>
+        <div class="game-card">
+          <h4 id='game_name'><%= "#{game.name}" %></h4>
+          <p id='white'>
+            <% player = User.all.find_by(id: game.white_player)%>
+            <%= 'White player: ' if game.black_player.nil? %>
+            <% if !player.name.blank? %>
+              <%= player.name %>
+            <% elsif !player.email.blank? %>
+              <%= player.email %>
             <% end %>
-          <% end %>
-        </p>
-        <%= link_to "Continue game", game_path(game), class: 'btn btn-xs btn-success' %><br><br>
-      </div><br>
-    <% end %>
-  <!-- Finished games -->
-  <h2><strong>Finished Games</strong></h2>
-  <% @finished_games.each do |game| %>
-      <div class="game-card">
-        <h4 id='game_name'><%= "#{game.name}" %></h4>
-        <p id='white'>
-          <% player = User.all.find_by(id: game.white_player)%>
-          <%= 'White player: ' if game.black_player.nil? %>
-          <% if !player.name.blank? %>
-            <%= player.name %>
-          <% elsif !player.email.blank? %>
-            <%= player.email %>
-          <% end %>
-          <% if !game.black_player.nil? %>
-          <% player2 = User.all.find_by(id: game.black_player)%>
-            <%= ' vs ' %>
-            <% if !player2.name.blank? %>
-              <%= player2.name %>
-            <% elsif !player2.email.blank? %>
-              <%= player2.email %>
+            <% if !game.black_player.nil? %>
+            <% player2 = User.all.find_by(id: game.black_player)%>
+              <%= ' vs ' %>
+              <% if !player2.name.blank? %>
+                <%= player2.name %>
+              <% elsif !player2.email.blank? %>
+                <%= player2.email %>
+              <% end %>
             <% end %>
-          <% end %>
-        </p>
-        <%= link_to "See results", game_path(game), class: 'btn btn-xs btn-default' %><br><br>
-      </div><br>
-    <% end %>
-  </div>
+          </p>
+          <%= link_to "Continue game", game_path(game), class: 'btn btn-xs btn-success' %><br><br>
+        </div><br>
+      <% end %>
+    <!-- Finished games -->
+    <h2><strong>Finished Games</strong></h2>
+    <% @finished_games.each do |game| %>
+        <div class="game-card">
+          <h4 id='game_name'><%= "#{game.name}" %></h4>
+          <p id='white'>
+            <% player = User.all.find_by(id: game.white_player)%>
+            <%= 'White player: ' if game.black_player.nil? %>
+            <% if !player.name.blank? %>
+              <%= player.name %>
+            <% elsif !player.email.blank? %>
+              <%= player.email %>
+            <% end %>
+            <% if !game.black_player.nil? %>
+            <% player2 = User.all.find_by(id: game.black_player)%>
+              <%= ' vs ' %>
+              <% if !player2.name.blank? %>
+                <%= player2.name %>
+              <% elsif !player2.email.blank? %>
+                <%= player2.email %>
+              <% end %>
+            <% end %>
+          </p>
+          <%= link_to "See results", game_path(game), class: 'btn btn-xs btn-default' %><br><br>
+        </div><br>
+      <% end %>
+    </div>
+  <% end %>
 
   <!-- Available games -->
   <div class="col-sm-4 text-center">

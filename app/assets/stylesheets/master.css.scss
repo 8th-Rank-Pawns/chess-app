@@ -40,9 +40,9 @@ body {
   line-height: 2.6em;
 }
 
-.brand:hover {
+.brand a:hover {
   color: grey;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .navbar-inverse .navbar-nav > li > a {
