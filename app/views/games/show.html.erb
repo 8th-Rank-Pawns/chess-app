@@ -33,7 +33,7 @@
         }).done(function(data){
           if (data.horizontal_position !== x || data.vertical_position !== y) {
             alert("Illegal move. Try again.");
-            // window.location.reload();
+            window.location.reload();
           }
           else if (type == 'Pawn' && (data.vertical_position == 8)) {
             $('#myModal').modal('show');
@@ -48,7 +48,7 @@
           else if (x === horiz && y === vert) {
           }
           else {
-            // window.location.reload();
+            window.location.reload();
           }
         });
       }
