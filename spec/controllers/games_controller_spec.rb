@@ -116,6 +116,17 @@ RSpec.describe GamesController, type: :controller do
         expect(game.checkmate!('black')).to eq(true)
       end
     end
+
+    context'stalemate method working correctly' do
+      it 'returns true when game is in stalemate' do
+        game = FactoryGirl.create(:game)
+        FactoryGirl.create(:king, horizontal_position: 7, vertical_position: 3, color: 'white', game: game)
+        FactoryGirl.create(:rook, horizontal_position: 1, vertical_position: 1, color: 'white', game: game)
+        FactoryGirl.create(:bishop, horizontal_position: 7, vertical_position: 1, color: 'black', game: game)
+        FactoryGirl.create(:king, horizontal_position: 8, vertical_position: 1, color: 'black', game: game)
+        expect(game.stalemate?('black')).to eq true
+      end
+    end
   end
 
   describe 'games#update action' do

@@ -1,7 +1,6 @@
 class King < Piece
   def valid_move?(x_end, y_end)
-    chess_piece = game.pieces.find_by(horizontal_position: x_end, vertical_position: y_end)
-    return false if !chess_piece.nil? && chess_piece.color == color
+    super(x_end, y_end)
     too_far = (x_end - horizontal_position).abs > 1 || (y_end - vertical_position).abs > 1
     return true unless did_not_move?(x_end, y_end) || too_far
     false

@@ -24,6 +24,17 @@ class Game < ActiveRecord::Base
     end
   end
 
+  def stalemate?(color)
+    Piece.where(game: self).where(color: color).each do |piece|
+      (1...8).each do |x_pos|
+        (1...8).each do |y_pos|
+          legal_move_exception = piece.move_into_check?(x_pos, y_pos, piece.horizontal_position, piece.vertical_position)
+          return false if check?(color) || !king_cant_move(color) || (piece.valid_move?(x_pos, y_pos) && !legal_move_exception)
+        end
+      end
+    end
+  end
+
   def checkmate!(color)
     return true if check?(color) == 'in check & no blockers' && king_cant_move(color)
     false
