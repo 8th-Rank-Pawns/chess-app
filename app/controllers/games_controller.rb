@@ -31,8 +31,8 @@ class GamesController < ApplicationController
       return redirect_to game_path(@game)
     end
     return unless params[:concede] == 'true'
-      @game.update_attributes(finished: true)
-      redirect_to root_path
+    @game.update_attributes(finished: true)
+    redirect_to root_path
   end
 
   private
