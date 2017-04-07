@@ -26,8 +26,13 @@ class GamesController < ApplicationController
 
   def update
     @game = Game.find(params[:id])
-    @game.update_attributes(black_player: current_user.id) if @game.black_player.nil?
-    redirect_to game_path(@game)
+    if @game.black_player.nil? && params[:concede].blank?
+      @game.update_attributes(black_player: current_user.id)
+      return redirect_to game_path(@game)
+    end
+    return unless params[:concede] == 'true'
+    @game.update_attributes(finished: true)
+    redirect_to root_path
   end
 
   private
@@ -38,9 +43,19 @@ class GamesController < ApplicationController
 
   def flash_notices
     flash[:notice] = nil
-    return flash[:notice] = 'Checkmate. Black Player Wins!' if @game.checkmate!('white')
-    return flash[:notice] = 'Checkmate. White Player Wins!' if @game.checkmate!('black')
-    flash[:notice] = 'Black King Check!' if @game.check?('black')
-    flash[:notice] = 'White King Check!' if @game.check?('white')
+    flash[:alert] = nil
+    flash[:notice] = @game.turn ? 'White Player\'s turn' : 'Black Player\'s turn'
+    if @game.checkmate!('white')
+      flash[:notice] = nil
+      @game.update_attributes(finished: true)
+      return flash[:alert] = 'Checkmate. Black Player Wins!'
+    end
+    if @game.checkmate!('black')
+      flash[:notice] = nil
+      @game.update_attributes(finished: true)
+      return flash[:alert] = 'Checkmate. White Player Wins!'
+    end
+    flash[:alert] = 'Black King Check!' if @game.check?('black')
+    flash[:alert] = 'White King Check!' if @game.check?('white')
   end
 end

@@ -9,7 +9,11 @@ module GamesHelper
     @game.pieces.where(horizontal_position: x, vertical_position: y).first
   end
 
-  # def path_to_king
-  #   return []
-  # end
+  def colors_turn(color)
+    if !@game.finished
+      return 'drag' if (@game.turn && color == 'white') || (!@game.turn && color == 'black')
+    else
+      'default'
+    end
+  end
 end
