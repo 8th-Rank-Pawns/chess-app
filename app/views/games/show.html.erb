@@ -3,7 +3,7 @@
     $('.drag').draggable({
       revert: "invalid"
     });
-    $('.drag a').bind('click', function(e){
+    $('.drag a, .default a').bind('click', function(e){
         e.preventDefault();
     });
 
@@ -20,7 +20,7 @@
         var type = $(ui.draggable.context.outerHTML).attr("data-piece-type");
         var horiz = parseInt($(ui.draggable.context.outerHTML).attr("data-horiz"));
         var vert = parseInt($(ui.draggable.context.outerHTML).attr("data-vert"));
-        console.log(horiz, x, vert, y);
+        // console.log(horiz, x, vert, y);
         if (x !== horiz || y !== vert) {
           $(this).find('.default').hide();
         }
