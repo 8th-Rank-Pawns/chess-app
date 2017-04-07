@@ -30,7 +30,7 @@ class GamesController < ApplicationController
       @game.update_attributes(black_player: current_user.id)
       return redirect_to game_path(@game)
     end
-    if params[:concede] == 'true'
+    return unless params[:concede] == 'true'
       @game.update_attributes(finished: true)
       redirect_to root_path
     end

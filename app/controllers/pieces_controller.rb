@@ -11,6 +11,7 @@ class PiecesController < ApplicationController
   end
 
   private
+  
   def change_turn(color)
     return false if color == 'white'
     true
