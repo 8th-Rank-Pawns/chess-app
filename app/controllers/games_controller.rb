@@ -45,8 +45,7 @@ class GamesController < ApplicationController
   def flash_notices
     flash[:notice] = nil
     flash[:alert] = nil
-    flash[:notice] = 'White Player\'s turn' if @game.turn
-    flash[:notice] = 'Black Player\'s turn' if @game.turn == false
+    flash[:notice] = @game.turn ? 'White Player\'s turn' : 'Black Player\'s turn'
     if @game.checkmate!('white')
       flash[:notice] = nil
       @game.update_attributes(finished: true)
