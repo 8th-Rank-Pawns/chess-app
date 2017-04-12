@@ -7,14 +7,9 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
-<!--   <script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase-database.js"></script> -->
 
 </head>
 <body>
-
-<!-- <pre id="object"></pre> -->
 
 <nav class="navbar navbar-inverse" role="navigation">
   <div class="container-fluid">
@@ -64,25 +59,4 @@
 <%= yield %>
 
 </body>
-<!--   <script>
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyBTq0OeHjGjPO3HigPg6f7wpXHEUmkY5KM",
-      authDomain: "chess-8f4e7.firebaseapp.com",
-      databaseURL: "https://chess-8f4e7.firebaseio.com",
-      projectId: "chess-8f4e7",
-      storageBucket: "chess-8f4e7.appspot.com",
-      messagingSenderId: "361108543433"
-    };
-    firebase.initializeApp(config);
-
-    const preObject = document.getElementById('user_name');
-
-    const dbRefObject = firebase.database().ref().child('user_name');
-    
-    dbRefObject.on('value', snap => {
-      preObject.innerText = JSON.stringify(snap.val(), null, 3);
-    });
-
-  </script> -->
 </html>
