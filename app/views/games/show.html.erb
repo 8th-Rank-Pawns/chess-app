@@ -1,3 +1,6 @@
+<script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase-database.js"></script>
 <script>
   $(function() {
     $('.drag').draggable({
@@ -49,12 +52,21 @@
           }
           else {
             window.location.reload();
+
+
+            function writeUserData(name) {
+              firebase.database().ref().set({
+                user_name: name,
+              });
+            }
+            writeUserData(Date.now());
           }
         });
       }
     });
   });
 </script>
+<pre id="object" data-time-stamp='<%= Time.now.to_f*1000 %>'></pre>
 <div class='active_player'>
   <% white = User.all.find_by(id: @game.white_player)%>
   <% if white.name %>
@@ -64,7 +76,7 @@
   <% end %>
   <%= link_to 'concede', game_path(@game, {concede: true}.merge(params)), data: {confirm: "Are you sure you want to forfeit?" }, method: :put, class: 'btn btn-xs btn-default concede' %>
 </div>
-<div class="board">
+<div class="board" data-game-id='<%= @game.id %>'>
   <% board = Array.new(8) %>
   <% board.map! {Array(1..8)}%>
   <% board.each_with_index do |row, index| %>
@@ -133,3 +145,31 @@
       </div>
     </div>
 </div>
+
+<script >
+    var config = {
+    apiKey: "AIzaSyBTq0OeHjGjPO3HigPg6f7wpXHEUmkY5KM",
+    authDomain: "chess-8f4e7.firebaseapp.com",
+    databaseURL: "https://chess-8f4e7.firebaseio.com",
+    projectId: "chess-8f4e7",
+    storageBucket: "chess-8f4e7.appspot.com",
+    messagingSenderId: "361108543433"
+  };
+  firebase.initializeApp(config);
+
+  const preObject = document.getElementById('object');
+
+  const dbRefObject = firebase.database().ref().child('user_name');
+
+  load_time_stamp = $( "pre" ).data('time-stamp');
+  
+  dbRefObject.on('value', snap => {
+    preObject.innerText = snap.val();
+
+  if (load_time_stamp < snap.val()) {
+    window.location.reload();
+  }
+
+  });
+
+</script>
