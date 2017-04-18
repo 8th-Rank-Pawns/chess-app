@@ -1,3 +1,86 @@
+<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase-database.js"></script>
+
+<body data-time-stamp='<%= Time.now.to_f*1000 %>'>
+  <div class='active_player'>
+    <% white = User.all.find_by(id: @game.white_player)%>
+    <% if white.name %>
+      <%= white.name %>
+    <% else %>
+      <%= white.email %>
+    <% end %>
+    <%= link_to 'concede', game_path(@game, {concede: true}.merge(params)), data: {confirm: "Are you sure you want to forfeit?" }, method: :put, class: 'btn btn-xs btn-default concede' %>
+  </div>
+  <div class="board" data-game-id='<%= @game.id %>'>
+    <% board = Array.new(8) %>
+    <% board.map! {Array(1..8)}%>
+    <% board.each_with_index do |row, index| %>
+      <div class="row">
+        <% row.each do |x| %>
+          <% y = index + 1 %>
+          <div class='drop' data-square-x=<%= x %> data-square-y=<%= y %>>
+            <% y = index + 1 %>
+            <% location = locate_piece(x, y) %>
+            <% if !location.nil? %>
+              <div class='<%= colors_turn(location.color) %>' data-piece-type=<%= location.type %> data-horiz=<%= location.horizontal_position %> data-vert=<%= location.vertical_position %>>
+                <%= link_to render_piece(x, y), piece_path(location) %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class='active_player'>
+    <% if @game.black_player %>
+      <% black = User.all.find_by(id: @game.black_player)%>
+      <% if black.name %>
+        <%= black.name %>
+      <% else %>
+        <%= black.email %>
+      <% end %>
+    <% end %>
+  </div>
+  <br/>
+  <h5 id='castling'>Castling (when legal) is performed by moving your King 2 spaces to the left or right.</h5>
+
+  <div class="modal fade" id='myModal' role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLabel">Promote Your Pawn</h4>
+        </div>
+        <form action="#" onsubmit="updateTimeStamp(Date.now())">
+          <div class="promo-selection-container">
+            <div class="checkboxgroup">
+              <label for="Queen.png" class="radio-label">
+                <img src="/assets/whiteQueen.png" id="q" class="piece-image">
+                <br />
+                Queen
+              </label>
+              <input class="radio-input" type="radio" name="p_type" value="Queen" checked="checked">
+            </div>
+            <% ['Knight', 'Rook', 'Bishop'].each do |name| %>
+              <div class="checkboxgroup">
+                <label for="white<%= name %>.png">
+                  <img src="/assets/white<%= name %>.png" id="<%= name.chars.first.downcase %>" class="piece-image">
+                  <br />
+                  <%= name %>
+                </label>
+                <input type="radio" name="p_type" value="<%= name %>" id="<%= name %>">
+              </div>
+            <% end %>
+            <br />
+            <br />
+            <input type="submit" class="btn btn-primary">
+          </div>
+        </form>
+        <br />
+        </div>
+        </div>
+      </div>
+  </div>
+</body>
 <script>
   $(function() {
     $('.drag').draggable({
@@ -49,87 +132,37 @@
           }
           else {
             window.location.reload();
+            updateTimeStamp(Date.now());
           }
         });
       }
     });
   });
-</script>
-<div class='active_player'>
-  <% white = User.all.find_by(id: @game.white_player)%>
-  <% if white.name %>
-    <%= white.name %>
-  <% else %>
-    <%= white.email %>
-  <% end %>
-  <%= link_to 'concede', game_path(@game, {concede: true}.merge(params)), data: {confirm: "Are you sure you want to forfeit?" }, method: :put, class: 'btn btn-xs btn-default concede' %>
-</div>
-<div class="board">
-  <% board = Array.new(8) %>
-  <% board.map! {Array(1..8)}%>
-  <% board.each_with_index do |row, index| %>
-    <div class="row">
-      <% row.each do |x| %>
-        <% y = index + 1 %>
-        <div class='drop' data-square-x=<%= x %> data-square-y=<%= y %>>
-          <% y = index + 1 %>
-          <% location = locate_piece(x, y) %>
-          <% if !location.nil? %>
-            <div class='<%= colors_turn(location.color) %>' data-piece-type=<%= location.type %> data-horiz=<%= location.horizontal_position %> data-vert=<%= location.vertical_position %>>
-              <%= link_to render_piece(x, y), piece_path(location) %>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
-</div>
-<div class='active_player'>
-  <% if @game.black_player %>
-    <% black = User.all.find_by(id: @game.black_player)%>
-    <% if black.name %>
-      <%= black.name %>
-    <% else %>
-      <%= black.email %>
-    <% end %>
-  <% end %>
-</div>
-<br/>
-<h5 id='castling'>Castling (when legal) is performed by moving your King 2 spaces to the left or right.</h5>
 
-<div class="modal fade" id='myModal' role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="exampleModalLabel">Promote Your Pawn</h4>
-      </div>
-      <form action="#">
-        <div class="promo-selection-container">
-          <div class="checkboxgroup">
-            <label for="Queen.png" class="radio-label">
-              <img src="/assets/whiteQueen.png" id="q" class="piece-image">
-              <br />
-              Queen
-            </label>
-            <input class="radio-input" type="radio" name="p_type" value="Queen" checked="checked">
-          </div>
-          <% ['Knight', 'Rook', 'Bishop'].each do |name| %>
-            <div class="checkboxgroup">
-              <label for="white<%= name %>.png">
-                <img src="/assets/white<%= name %>.png" id="<%= name.chars.first.downcase %>" class="piece-image">
-                <br />
-                <%= name %>
-              </label>
-              <input type="radio" name="p_type" value="<%= name %>" id="<%= name %>">
-            </div>
-          <% end %>
-          <br />
-          <br />
-          <input type="submit" class="btn btn-primary">
-        </div>
-      </form>
-      <br />
-      </div>
-      </div>
-    </div>
-</div>
+  var config = {
+    apiKey: "AIzaSyBTq0OeHjGjPO3HigPg6f7wpXHEUmkY5KM",
+    authDomain: "chess-8f4e7.firebaseapp.com",
+    databaseURL: "https://chess-8f4e7.firebaseio.com",
+    projectId: "chess-8f4e7",
+    storageBucket: "chess-8f4e7.appspot.com",
+    messagingSenderId: "361108543433"
+  };
+  firebase.initializeApp(config);
+
+  const dbRefObject = firebase.database().ref().child('move_time_stamp');
+
+  load_time_stamp = $("body").data('time-stamp');
+
+  function updateTimeStamp(data) {
+    firebase.database().ref().set({
+      move_time_stamp: data,
+    });
+  }
+
+  dbRefObject.on('value', snap => {
+    if (load_time_stamp < snap.val()) {
+      window.location.reload();
+    }
+  });
+
+</script>

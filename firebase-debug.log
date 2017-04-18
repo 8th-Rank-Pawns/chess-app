@@ -1,0 +1,192 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /home/vagrant/.nvm/versions/node/v5.0.0/bin/node /home/vagrant/.nvm/versions/node/v5.0.0/bin/firebase init
+[debug] CLI Version:  3.6.0
+[debug] Platform:     linux
+[debug] Node Version: v5.0.0
+[debug] Time:         Mon Apr 10 2017 21:23:39 GMT+0000 (UTC)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase"]
+[error] 
+[error] Error: Command requires authentication, please run firebase login
+[debug] Error: ETXTBSY: text file is busy, unlink '/vagrant/src/chess-app/firebase-debug.log'
+    at Error (native)
+    at Object.fs.unlinkSync (fs.js:980:18)
+    at process.<anonymous> (/home/vagrant/.nvm/versions/node/v5.0.0/lib/node_modules/firebase-tools/bin/firebase:60:8)
+    at emitOne (events.js:82:20)
+    at process.emit (events.js:169:7)
+    at process.exit (node.js:758:17)
+    at null._onTimeout (/home/vagrant/.nvm/versions/node/v5.0.0/lib/node_modules/firebase-tools/lib/errorOut.js:17:13)
+    at Timer.listOnTimeout (timers.js:92:15)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /home/vagrant/.nvm/versions/node/v5.0.0/bin/node /home/vagrant/.nvm/versions/node/v5.0.0/bin/firebase login --interactive
+[debug] CLI Version:  3.6.0
+[debug] Platform:     linux
+[debug] Node Version: v5.0.0
+[debug] Time:         Mon Apr 10 2017 21:31:45 GMT+0000 (UTC)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] 
+[info] Visit this URL on any device to log in:
+[info] https://accounts.google.com/o/oauth2/auth?client_id=563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com&scope=email%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloudplatformprojects.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffirebase%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform&response_type=code&state=110276707&redirect_uri=http%3A%2F%2Flocalhost%3A9005
+[info] 
+[info] Waiting for authentication...
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /home/vagrant/.nvm/versions/node/v5.0.0/bin/node /home/vagrant/.nvm/versions/node/v5.0.0/bin/firebase login --no-localhost
+[debug] CLI Version:  3.6.0
+[debug] Platform:     linux
+[debug] Node Version: v5.0.0
+[debug] Time:         Mon Apr 10 2017 21:34:18 GMT+0000 (UTC)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] 
+[info] Visit this URL on any device to log in:
+[info] https://accounts.google.com/o/oauth2/auth?client_id=563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com&scope=email%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloudplatformprojects.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffirebase%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform&response_type=code&state=43295242&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob
+[info] 
+[debug] >>> HTTP REQUEST POST https://accounts.google.com/o/oauth2/token { code: 'https://accounts.google.com/o/oauth2/auth?client_id=563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com&scope=email%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloudplatformprojects.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffirebase%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform&response_type=code&state=43295242&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
+  grant_type: 'authorization_code' } 
+ Mon Apr 10 2017 21:34:30 GMT+0000 (UTC)
+[debug] <<< HTTP RESPONSE 400
+[debug] <<< HTTP RESPONSE BODY
+[error] 
+[error] Error: Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+[debug] Error: ETXTBSY: text file is busy, unlink '/vagrant/src/chess-app/firebase-debug.log'
+    at Error (native)
+    at Object.fs.unlinkSync (fs.js:980:18)
+    at process.<anonymous> (/home/vagrant/.nvm/versions/node/v5.0.0/lib/node_modules/firebase-tools/bin/firebase:60:8)
+    at emitOne (events.js:82:20)
+    at process.emit (events.js:169:7)
+    at process.exit (node.js:758:17)
+    at null._onTimeout (/home/vagrant/.nvm/versions/node/v5.0.0/lib/node_modules/firebase-tools/lib/errorOut.js:17:13)
+    at Timer.listOnTimeout (timers.js:92:15)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /home/vagrant/.nvm/versions/node/v5.0.0/bin/node /home/vagrant/.nvm/versions/node/v5.0.0/bin/firebase login --no-localhost
+[debug] CLI Version:  3.6.0
+[debug] Platform:     linux
+[debug] Node Version: v5.0.0
+[debug] Time:         Mon Apr 10 2017 21:34:40 GMT+0000 (UTC)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] 
+[info] Visit this URL on any device to log in:
+[info] https://accounts.google.com/o/oauth2/auth?client_id=563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com&scope=email%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloudplatformprojects.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffirebase%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform&response_type=code&state=597520571&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob
+[info] 
+[debug] >>> HTTP REQUEST POST https://accounts.google.com/o/oauth2/token { code: '4/YVhB5Nm_KgaG3MvAfbldtHPzfRx6-U5-sxofq45I-KQ',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
+  grant_type: 'authorization_code' } 
+ Mon Apr 10 2017 21:37:00 GMT+0000 (UTC)
+[debug] <<< HTTP RESPONSE 200
+[info] 
+[info] ✔  Success! Logged in as kevinjoglesby@gmail.com
+[debug] Error: ETXTBSY: text file is busy, unlink '/vagrant/src/chess-app/firebase-debug.log'
+    at Error (native)
+    at Object.fs.unlinkSync (fs.js:980:18)
+    at process.<anonymous> (/home/vagrant/.nvm/versions/node/v5.0.0/lib/node_modules/firebase-tools/bin/firebase:60:8)
+    at emitOne (events.js:82:20)
+    at process.emit (events.js:169:7)
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /home/vagrant/.nvm/versions/node/v5.0.0/bin/node /home/vagrant/.nvm/versions/node/v5.0.0/bin/firebase init
+[debug] CLI Version:  3.6.0
+[debug] Platform:     linux
+[debug] Node Version: v5.0.0
+[debug] Time:         Mon Apr 10 2017 21:37:22 GMT+0000 (UTC)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase"]
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /vagrant/src/chess-app
+
+Before we get started, keep in mind:
+
+  * You are currently outside your home directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/5FOoiH7wNSmSHIULocigaigjWffYydEzjAyCab4U1k8',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Mon Apr 10 2017 21:40:28 GMT+0000 (UTC)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects  
+ Mon Apr 10 2017 21:40:28 GMT+0000 (UTC)
+[debug] <<< HTTP RESPONSE 200
+[info] 
+[info] i  Writing configuration info to firebase.json...
+[info] i  Writing project information to .firebaserc...
+[info] 
+[info] ✔  Firebase initialization complete!
+[debug] Error: ETXTBSY: text file is busy, unlink '/vagrant/src/chess-app/firebase-debug.log'
+    at Error (native)
+    at Object.fs.unlinkSync (fs.js:980:18)
+    at process.<anonymous> (/home/vagrant/.nvm/versions/node/v5.0.0/lib/node_modules/firebase-tools/bin/firebase:60:8)
+    at emitOne (events.js:82:20)
+    at process.emit (events.js:169:7)
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /home/vagrant/.nvm/versions/node/v5.0.0/bin/node /home/vagrant/.nvm/versions/node/v5.0.0/bin/firebase serve
+[debug] CLI Version:  3.6.0
+[debug] Platform:     linux
+[debug] Node Version: v5.0.0
+[debug] Time:         Mon Apr 10 2017 21:42:11 GMT+0000 (UTC)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/5FOoiH7wNSmSHIULocigaigjWffYydEzjAyCab4U1k8',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Mon Apr 10 2017 21:42:11 GMT+0000 (UTC)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/chess-8f4e7  
+ Mon Apr 10 2017 21:42:11 GMT+0000 (UTC)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/chess-8f4e7/tokens  
+ Mon Apr 10 2017 21:42:19 GMT+0000 (UTC)
+[debug] <<< HTTP RESPONSE 200
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /vagrant/src/chess-app
+[debug] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/chess-8f4e7  
+ Mon Apr 10 2017 21:42:20 GMT+0000 (UTC)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/361108543433/clients/_:getWebAppConfig  
+ Mon Apr 10 2017 21:42:20 GMT+0000 (UTC)
+[debug] <<< HTTP RESPONSE 200
+[debug] TypeError: Cannot read property 'public' of undefined
+    at Server.<anonymous> (/home/vagrant/.nvm/versions/node/v5.0.0/lib/node_modules/firebase-tools/commands/serve.js:37:17)
+    at Server.g (events.js:260:16)
+    at emitNone (events.js:67:13)
+    at Server.emit (events.js:166:7)
+    at emitListeningNT (net.js:1260:10)
+    at doNTCallback1 (node.js:439:9)
+    at process._tickCallback (node.js:361:17)
+[error] 
+[error] Error: An unexpected error has occurred.
