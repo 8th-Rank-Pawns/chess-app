@@ -149,18 +149,19 @@
   };
   firebase.initializeApp(config);
 
-  const dbRefObject = firebase.database().ref().child('move_time_stamp');
+  const dbRefObject = firebase.database().ref().child('<%= @game.id %>');
 
   load_time_stamp = $("body").data('time-stamp');
 
   function updateTimeStamp(data) {
-    firebase.database().ref().set({
+    firebase.database().ref().child('<%= @game.id %>').set({
       move_time_stamp: data,
     });
   }
 
   dbRefObject.on('value', snap => {
-    if (load_time_stamp < snap.val()) {
+    // console.log(snap.child('move_time_stamp').val());
+    if (load_time_stamp < snap.child('move_time_stamp').val()) {
       window.location.reload();
     }
   });
